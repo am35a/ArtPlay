@@ -13,11 +13,11 @@
   $: current = Number.isFinite(state.currentTime) ? state.currentTime : 0
 </script>
 
-<section class="now-playing d_l_align-items--center">
+<section class="now-playing d_l_align-content--center">
   <section class="hero">
     <strong class="d_l_flex-grow--1">{track?.albumTitle}</strong>
     <img class="cover d_l_box-shadow--md" src={track?.cover ?? ''} alt={track?.albumTitle ?? 'cover'} />
-    <h2 class="d_l_margin-block--unset">{track?.title ?? 'Ничего не играет'}</h2>
+    <h3 class="d_l_margin-block--unset">{track?.title ?? 'Ничего не играет'}</h3>
     <span>{track?.artistName ?? ''}</span>
     <span>{formatSeconds(current)} / {formatSeconds(duration)}</span>
   </section>

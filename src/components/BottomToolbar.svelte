@@ -12,7 +12,7 @@
   ]
 </script>
 
-<menu class="toolbar" type="toolbar">
+<menu class="toolbar backdrop-filter" style="--backdrop-filter: contrast(1.3) saturate(2) grayscale(.8) blur(1em);" type="toolbar">
   {#each items as item}
     <li>
       <button
@@ -47,7 +47,7 @@
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 0.5em;
     padding: 0.5em;
-    background: color-mix(in srgb, var(--positive, #fff) 96%, transparent);
+    /* background: color-mix(in srgb, var(--positive, #fff) 96%, transparent); */
   }
 
   .toolbar button {
