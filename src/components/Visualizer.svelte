@@ -6,24 +6,41 @@
 
   let canvas
   let raf = 0
+  const MAX_CANVAS_WIDTH = 1280
+  const MAX_CANVAS_HEIGHT = 32
 
   function resizeCanvas() {
     if (!canvas) return
     const rect = canvas.getBoundingClientRect()
-    canvas.width = Math.max(1, Math.floor(rect.width * window.devicePixelRatio))
-    canvas.height = Math.max(1, Math.floor(rect.height * window.devicePixelRatio))
+    const dpr = Math.max(1, window.devicePixelRatio || 1)
+    const cssWidth = Math.min(rect.width, MAX_CANVAS_WIDTH)
+    const cssHeight = Math.min(rect.height, MAX_CANVAS_HEIGHT)
+
+    canvas.width = Math.max(1, Math.floor(cssWidth * dpr))
+    canvas.height = Math.max(1, Math.floor(cssHeight * dpr))
   }
 
   function drawSpectrum(ctx, w, h, data) {
-    const bars = data.length
+    const groupSize = 2
+    const bars = Math.ceil(data.length / groupSize)
     const barWidth = w / bars
+    const gap = barWidth * 0.5
+    const actualBarWidth = Math.max(1, barWidth - gap)
 
     for (let i = 0; i < bars; i += 1) {
-      const value = data[i] / 255
+      const start = i * groupSize
+      const end = Math.min(start + groupSize, data.length)
+
+      let sum = 0
+      for (let j = start; j < end; j += 1) {
+        sum += data[j]
+      }
+
+      const value = (sum / Math.max(1, end - start)) / 255
       const barHeight = h * value
       const color = value > 0.55 ? '#ff8f33' : '#34c759'
       ctx.fillStyle = color
-      ctx.fillRect(i * barWidth, h - barHeight, Math.max(1, barWidth - 1), barHeight)
+      ctx.fillRect(i * barWidth + gap * 0.5, h - barHeight, actualBarWidth, barHeight)
     }
   }
 
@@ -58,11 +75,16 @@
     ctx.fillRect(0, 0, w, h)
 
     if (!analyser) {
-      ctx.fillStyle = 'rgba(255,255,255,0.72)'
-      ctx.font = `${16 * window.devicePixelRatio}px sans-serif`
+      ctx.textAlign = 'center'
+      ctx.textBaseline = 'middle'
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.5)'
+      ctx.fillRect(0, 0, w, h)
+      ctx.font = `${20 * window.devicePixelRatio}px sans-serif`
+      ctx.lineWidth = Math.max(2, 1.5 * window.devicePixelRatio)
+      ctx.strokeStyle = 'rgba(0,0,0,0.85)'
+      ctx.fillStyle = 'rgba(255,255,255,0.98)'
+      ctx.strokeText('Ошибка визуализации!', w / 2, h / 2)
       ctx.fillText('Ошибка визуализации!', w / 2, h / 2)
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
       raf = requestAnimationFrame(frame)
       return
     }
@@ -103,10 +125,14 @@
 <style>
   .visualizer {
     position: absolute;
-    width: 100%;
-    height: 100%;
+    width: min(100%, 1280px);
+    max-width: 1280px;
+    height: 32px;
+    max-height: 32px;
     border-radius: 0.5em;
     background: #10141b;
+    left: 50%;
+    transform: translateX(-50%);
 
     grid-row: 1/-1;
     grid-column: 1/-1;
