@@ -5,6 +5,10 @@
 
   const dispatch = createEventDispatcher()
   const EMPTY_PIXEL = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJpY29uIGljb24tdGFibGVyIGljb25zLXRhYmxlci1vdXRsaW5lIGljb24tdGFibGVyLXgiPjxwYXRoIHN0cm9rZT0ibm9uZSIgZD0iTTAgMGgyNHYyNEgweiIgZmlsbD0ibm9uZSIgLz48cGF0aCBkPSJNMTggNmwtMTIgMTIiIC8+PHBhdGggZD0iTTYgNmwxMiAxMiIgLz48L3N2Zz4='
+
+  function getTracksTotal(artist) {
+    return artist.albums.reduce((sum, album) => sum + album.tracks.length, 0)
+  }
 </script>
 
 <section class="screen">
@@ -19,17 +23,11 @@
     <div class="author-grid">
       {#each artists as artist}
         <button class="author-card" type="button" on:click={() => dispatch('open', { artistId: artist.id })}>
-          <img src={artist.photo ?? EMPTY_PIXEL} alt={artist.name} />
-          <strong>{artist.name}</strong>
-          <div class="album-preview">
-            {#each artist.albums as album}
-              <article>
-                <img src={album.cover ?? EMPTY_PIXEL} alt={album.title} />
-                <span>{album.title}</span>
-                <small>{album.tracks.length} треков</small>
-              </article>
-            {/each}
-          </div>
+          <img class="author-cover" src={artist.photo ?? EMPTY_PIXEL} alt={artist.name} />
+          <span class="author-main d_l_line-height--1 d_l_font-size--s1">
+            <strong class="author-title">{artist.name}</strong>
+            <small class="author-meta">{artist.albums.length} альбомов • {getTracksTotal(artist)} треков</small>
+          </span>
         </button>
       {/each}
     </div>
@@ -44,53 +42,42 @@
 
   .author-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
-    gap: 0.75em;
+    gap: 0.35em;
   }
 
   .author-card {
-    text-align: left;
-    display: grid;
-    gap: 0.6em;
-    padding: 0.65em;
-    border-radius: 0.9em;
-  }
-
-  .author-card > img {
     width: 100%;
-    aspect-ratio: 16 / 9;
-    object-fit: cover;
-    border-radius: 0.75em;
-    background: color-mix(in srgb, var(--positive, #ddd) 70%, transparent);
-  }
-
-  .album-preview {
     display: grid;
-    gap: 0.45em;
-  }
-
-  .album-preview article {
-    display: grid;
-    grid-template-columns: 2.5em 1fr auto;
-    gap: 0.55em;
+    grid-template-columns: 2.5em 1fr;
+    gap: 0.75em;
     align-items: center;
+    text-align: left;
+    padding: 0.5em;
+    border-radius: 0.75em;
   }
 
-  .album-preview img {
+  .author-cover {
     width: 2.5em;
     height: 2.5em;
-    border-radius: 0.5em;
     object-fit: cover;
+    border-radius: 0.25em;
     background: color-mix(in srgb, var(--positive, #ddd) 70%, transparent);
   }
 
-  .album-preview span {
+  .author-main {
+    min-width: 0;
+    display: grid;
+    gap: 0.5em;
+  }
+
+  .author-title,
+  .author-meta {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
 
-  .album-preview small {
+  .author-meta {
     opacity: 0.75;
   }
 </style>
