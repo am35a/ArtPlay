@@ -75,16 +75,6 @@
     ctx.fillRect(0, 0, w, h)
 
     if (!analyser) {
-      ctx.textAlign = 'center'
-      ctx.textBaseline = 'middle'
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.5)'
-      ctx.fillRect(0, 0, w, h)
-      ctx.font = `${20 * window.devicePixelRatio}px sans-serif`
-      ctx.lineWidth = Math.max(2, 1.5 * window.devicePixelRatio)
-      ctx.strokeStyle = 'rgba(0,0,0,0.85)'
-      ctx.fillStyle = 'rgba(255,255,255,0.98)'
-      ctx.strokeText('Ошибка визуализации!', w / 2, h / 2)
-      ctx.fillText('Ошибка визуализации!', w / 2, h / 2)
       raf = requestAnimationFrame(frame)
       return
     }

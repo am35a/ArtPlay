@@ -123,6 +123,9 @@
       library = await loadLibraryManifest()
       playerStore.setLibrary(library)
       playerStore.hydrateAudioFromState()
+      if ($playerStore.activeScreen === 'nowPlaying') {
+        playerStore.ensureAnalyserReady()
+      }
     } catch (error) {
       loadError = error instanceof Error ? error.message : 'manifest load failed'
     } finally {
@@ -242,15 +245,19 @@
   }
 
   .app-shell {
-    min-height: 100vh;
+    min-height: 100dvh;
     display: grid;
     grid-template-rows: auto 1fr auto auto;
+    margin: auto;
+    max-width: 40em;
   }
 
   .nowplaying-shell {
-    min-height: 100vh;
+    min-height: 100dvh;
     display: grid;
     grid-template-rows: 1fr auto;
+    margin: auto;
+    max-width: 40em;
   }
 
   .screen-wrap {

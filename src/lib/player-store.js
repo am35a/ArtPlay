@@ -163,6 +163,15 @@ function createPlayerStore() {
     }
   }
 
+  function ensureAnalyserReady() {
+    try {
+      ensureAudioGraph()
+      return true
+    } catch {
+      return false
+    }
+  }
+
   async function playAudio() {
     try {
       ensureAudioGraph()
@@ -431,6 +440,7 @@ function createPlayerStore() {
   }
 
   function openNowPlaying() {
+    ensureAnalyserReady()
     update((state) => {
       if (!state.currentTrackId) return state
       if (state.activeScreen === 'nowPlaying') return state
@@ -519,6 +529,7 @@ function createPlayerStore() {
     openAlbum,
     openCurrentTrackAuthor,
     openCurrentTrackAlbum,
+    ensureAnalyserReady,
     openNowPlaying,
     goBackFromNowPlaying,
     setTrackQueue,
