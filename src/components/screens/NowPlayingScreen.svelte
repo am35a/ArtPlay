@@ -5,7 +5,6 @@
 
   export let state
   export let track
-  export let queueContext
   export let analyser
 
   const dispatch = createEventDispatcher()
@@ -15,14 +14,6 @@
 </script>
 
 <section class="now-playing d_l_align-items--center">
-  <header>
-    <button class="d_l_padding-inline--s3" type="button" on:click={() => dispatch('back')}>
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M15 6l-6 6l6 6" /></svg>
-    </button>
-    <!-- <strong class="d_l_flex-grow--1">{queueContext?.label ?? 'Сейчас играет'}</strong> -->
-    <span></span>
-  </header>
-
   <section class="hero">
     <strong class="d_l_flex-grow--1">{track?.albumTitle}</strong>
     <img class="cover d_l_box-shadow--md" src={track?.cover ?? ''} alt={track?.albumTitle ?? 'cover'} />
@@ -105,23 +96,9 @@
 
 <style>
   .now-playing {
-    min-height: 100vh;
     padding: 0.85em 1em 1.25em;
     display: grid;
     gap: 0.75em;
-  }
-
-  header {
-    display: flex;
-    align-items: center;
-    gap: 0.5em;
-  }
-
-  header strong {
-    text-align: center;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
   }
 
   .hero {

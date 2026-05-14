@@ -159,22 +159,26 @@
   <main class="state-view"><p>Ошибка: {loadError}</p></main>
 {:else}
   {#if hideGlobal}
-    <NowPlayingScreen
-      {state}
-      track={currentTrack}
-      queueContext={state.queueContext}
-      analyser={playerStore.getAnalyser()}
-      on:back={() => playerStore.goBackFromNowPlaying()}
-      on:seek={(event) => playerStore.seekTo(event.detail.value)}
-      on:prev={() => playerStore.playPrev()}
-      on:next={() => playerStore.playNext()}
-      on:rewind={() => playerStore.skipBy(-10)}
-      on:forward={() => playerStore.skipBy(10)}
-      on:toggle={() => playerStore.togglePlayPause()}
-      on:shuffle={() => playerStore.toggleShuffle()}
-      on:repeat={() => playerStore.cycleRepeat()}
-      on:mode={(event) => playerStore.setVisualizerMode(event.detail.mode)}
-    />
+    <main class="nowplaying-shell">
+      <NowPlayingScreen
+        {state}
+        track={currentTrack}
+        analyser={playerStore.getAnalyser()}
+        on:seek={(event) => playerStore.seekTo(event.detail.value)}
+        on:prev={() => playerStore.playPrev()}
+        on:next={() => playerStore.playNext()}
+        on:rewind={() => playerStore.skipBy(-10)}
+        on:forward={() => playerStore.skipBy(10)}
+        on:toggle={() => playerStore.togglePlayPause()}
+        on:shuffle={() => playerStore.toggleShuffle()}
+        on:repeat={() => playerStore.cycleRepeat()}
+        on:mode={(event) => playerStore.setVisualizerMode(event.detail.mode)}
+      />
+      <BottomToolbar
+        activeScreen={state.activeScreen}
+        on:go={(event) => onToolbarGo(event.detail.screen)}
+      />
+    </main>
   {:else}
     <main class="app-shell">
       <AppHeader value={query} on:search={(event) => playerStore.setSearchQuery(event.detail.value)} />
@@ -241,6 +245,12 @@
     min-height: 100vh;
     display: grid;
     grid-template-rows: auto 1fr auto auto;
+  }
+
+  .nowplaying-shell {
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: 1fr auto;
   }
 
   .screen-wrap {
