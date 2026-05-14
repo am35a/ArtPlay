@@ -106,6 +106,18 @@
     })
   }
 
+  function onToolbarGo(screen) {
+    if (screen === 'track') {
+      if (!state.currentTrackId && homeTracks.length > 0) {
+        playFromHome(homeTracks[0].id)
+      }
+      playerStore.openNowPlaying()
+      return
+    }
+
+    playerStore.goToScreen(screen)
+  }
+
   onMount(async () => {
     try {
       library = await loadLibraryManifest()
@@ -197,14 +209,16 @@
         on:toggle={() => playerStore.togglePlayPause()}
         on:prev={() => playerStore.playPrev()}
         on:next={() => playerStore.playNext()}
+        on:shuffle={() => playerStore.toggleShuffle()}
+        on:repeat={() => playerStore.cycleRepeat()}
+        on:author={() => playerStore.openCurrentTrackAuthor()}
+        on:album={() => playerStore.openCurrentTrackAlbum()}
         on:seek={(event) => playerStore.seekTo(event.detail.value)}
       />
 
       <BottomToolbar
         activeScreen={state.activeScreen}
-        canOpenAuthor={Boolean(state.selectedArtistId)}
-        canOpenAlbum={Boolean(state.selectedAlbumId)}
-        on:go={(event) => playerStore.goToScreen(event.detail.screen)}
+        on:go={(event) => onToolbarGo(event.detail.screen)}
       />
     </main>
   {/if}

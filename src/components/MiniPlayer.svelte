@@ -35,14 +35,14 @@
 >
     <div class="mini-controls d_l_font-size--l3 d_l_align-items--center">
       <div class="d_l_display--inline-flex d_l_gap--s2 d_l_flex-wrap--wrap d_l_justify-content--start d_l_font-size--s2">
-        <button class="d_l_padding-inline--s3 d_l_border-radius--l2 d_l_background-color--transparent" type="button" on:click={() => dispatch('shuffle')}>
+        <button class="d_l_padding-inline--s3 d_l_border-radius--l2 d_l_background-color--transparent" type="button" on:click|stopPropagation={() => dispatch('shuffle')}>
           {#if state.shuffle}
             <e-icon aria-hidden="true" style="--image: url(/icons/shuffle.svg);"></e-icon>
           {:else}
             <e-icon aria-hidden="true" style="--image: url(/icons/shuffle-off.svg);"></e-icon>
           {/if}
         </button>
-        <button class="d_l_padding-inline--s3 d_l_border-radius--l2 d_l_background-color--transparent" type="button" on:click={() => dispatch('repeat')}>
+        <button class="d_l_padding-inline--s3 d_l_border-radius--l2 d_l_background-color--transparent" type="button" on:click|stopPropagation={() => dispatch('repeat')}>
           {#if state.repeatMode === 'off'}
             <e-icon aria-hidden="true" style="--image: url(/icons/repeat-off.svg);"></e-icon>
           {:else if state.repeatMode === 'all'}
@@ -66,10 +66,10 @@
         <e-icon aria-hidden="true" style="--image: url(/icons/next.svg)"></e-icon>
       </button>
       <div class="d_l_display--inline-flex d_l_gap--s2 d_l_flex-wrap--wrap d_l_justify-content--end d_l_font-size--s2">
-        <button class="d_l_padding-inline--s3 d_l_border-radius--l2 d_l_background-color--transparent" type="button">
+        <button class="d_l_padding-inline--s3 d_l_border-radius--l2 d_l_background-color--transparent" type="button" on:click|stopPropagation={() => dispatch('author')} disabled={!track}>
           <e-icon aria-hidden="true" style="--image: url(/icons/author.svg)"></e-icon>
         </button>
-        <button class="d_l_padding-inline--s3 d_l_border-radius--l2 d_l_background-color--transparent" type="button">
+        <button class="d_l_padding-inline--s3 d_l_border-radius--l2 d_l_background-color--transparent" type="button" on:click|stopPropagation={() => dispatch('album')} disabled={!track}>
           <e-icon aria-hidden="true" style="--image: url(/icons/album.svg)"></e-icon>
         </button>
       </div>

@@ -107,6 +107,7 @@ function createPlayerStore() {
 
     update((state) => {
       const next = { ...state }
+      const allTrackIds = library.tracks.map((track) => track.id)
 
       if (next.selectedArtistId && !library.artistById.has(next.selectedArtistId)) {
         next.selectedArtistId = null
@@ -124,6 +125,20 @@ function createPlayerStore() {
       }
 
       next.queueTrackIds = (next.queueTrackIds ?? []).filter((id) => library.trackById.has(id))
+
+      if (!next.currentTrackId && allTrackIds.length > 0) {
+        const firstTrack = library.trackById.get(allTrackIds[0])
+        next.currentTrackId = firstTrack?.id ?? null
+        next.currentTime = 0
+        next.duration = Number.isFinite(firstTrack?.durationSec) ? firstTrack.durationSec : 0
+      }
+
+      if (next.queueTrackIds.length === 0 && allTrackIds.length > 0) {
+        next.queueTrackIds = allTrackIds
+        if (!next.queueContext) {
+          next.queueContext = { type: 'home', label: 'Главная' }
+        }
+      }
 
       return next
     })
@@ -401,6 +416,20 @@ function createPlayerStore() {
     }))
   }
 
+  function openCurrentTrackAuthor() {
+    const state = get(playerStore)
+    const track = getTrack(state.currentTrackId)
+    if (!track) return
+    openAuthor(track.artistId)
+  }
+
+  function openCurrentTrackAlbum() {
+    const state = get(playerStore)
+    const track = getTrack(state.currentTrackId)
+    if (!track) return
+    openAlbum(track.albumId)
+  }
+
   function openNowPlaying() {
     update((state) => {
       if (!state.currentTrackId) return state
@@ -488,6 +517,8 @@ function createPlayerStore() {
     goToScreen,
     openAuthor,
     openAlbum,
+    openCurrentTrackAuthor,
+    openCurrentTrackAlbum,
     openNowPlaying,
     goBackFromNowPlaying,
     setTrackQueue,
