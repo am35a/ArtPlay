@@ -29,20 +29,20 @@
   class="mini-player d_l_text-align--center d_l_box-shadow--md"
   role="button"
   tabindex="0"
-  on:click={() => dispatch('open')}
-  on:keydown={onContainerKeydown}
+  onclick={() => dispatch('open')}
+  onkeydown={onContainerKeydown}
   theme="light"
 >
     <div class="mini-controls d_l_font-size--l3 d_l_align-items--center">
       <div class="d_l_display--inline-flex d_l_gap--s2 d_l_flex-wrap--wrap d_l_justify-content--start d_l_font-size--s2">
-        <button class="d_l_padding-inline--s3 d_l_border-radius--l2 d_l_background-color--transparent" type="button" on:click|stopPropagation={() => dispatch('shuffle')}>
+        <button class="d_l_padding-inline--s3 d_l_border-radius--l2 d_l_background-color--transparent" type="button" onclick={(event) => { event.stopPropagation(); dispatch('shuffle') }}>
           {#if state.shuffle}
             <e-icon aria-hidden="true" style="--image: url(/icons/shuffle.svg);"></e-icon>
           {:else}
             <e-icon aria-hidden="true" style="--image: url(/icons/shuffle-off.svg);"></e-icon>
           {/if}
         </button>
-        <button class="d_l_padding-inline--s3 d_l_border-radius--l2 d_l_background-color--transparent" type="button" on:click|stopPropagation={() => dispatch('repeat')}>
+        <button class="d_l_padding-inline--s3 d_l_border-radius--l2 d_l_background-color--transparent" type="button" onclick={(event) => { event.stopPropagation(); dispatch('repeat') }}>
           {#if state.repeatMode === 'off'}
             <e-icon aria-hidden="true" style="--image: url(/icons/repeat-off.svg);"></e-icon>
           {:else if state.repeatMode === 'all'}
@@ -52,24 +52,24 @@
           {/if}
         </button>        
       </div>
-      <button class="d_l_padding-inline--s3 d_l_border-radius--l2 d_l_background-color--transparent" type="button" on:click|stopPropagation={() => dispatch('prev')}>
+      <button class="d_l_padding-inline--s3 d_l_border-radius--l2 d_l_background-color--transparent" type="button" onclick={(event) => { event.stopPropagation(); dispatch('prev') }}>
         <e-icon aria-hidden="true" style="--image: url(/icons/prev.svg)"></e-icon>
       </button>
-      <button type="button" class="d_l_padding-inline--s3 d_l_border-radius--l2 d_l_font-size--l2 prime" on:click|stopPropagation={() => dispatch('toggle')}>
+      <button type="button" class="d_l_padding-inline--s3 d_l_border-radius--l2 d_l_font-size--l2 prime" onclick={(event) => { event.stopPropagation(); dispatch('toggle') }}>
         {#if state.isPlaying}
           <e-icon aria-hidden="true" style="--image: url(/icons/pause.svg)"></e-icon>
         {:else}
           <e-icon aria-hidden="true" style="--image: url(/icons/play.svg)"></e-icon>
         {/if}
       </button>
-      <button class="d_l_padding-inline--s3 d_l_border-radius--l2 d_l_background-color--transparent" type="button" on:click|stopPropagation={() => dispatch('next')}>
+      <button class="d_l_padding-inline--s3 d_l_border-radius--l2 d_l_background-color--transparent" type="button" onclick={(event) => { event.stopPropagation(); dispatch('next') }}>
         <e-icon aria-hidden="true" style="--image: url(/icons/next.svg)"></e-icon>
       </button>
       <div class="d_l_display--inline-flex d_l_gap--s2 d_l_flex-wrap--wrap d_l_justify-content--end d_l_font-size--s2">
-        <button class="d_l_padding-inline--s3 d_l_border-radius--l2 d_l_background-color--transparent" type="button" on:click|stopPropagation={() => dispatch('author')} disabled={!track}>
+        <button class="d_l_padding-inline--s3 d_l_border-radius--l2 d_l_background-color--transparent" type="button" onclick={(event) => { event.stopPropagation(); dispatch('author') }} disabled={!track}>
           <e-icon aria-hidden="true" style="--image: url(/icons/author.svg)"></e-icon>
         </button>
-        <button class="d_l_padding-inline--s3 d_l_border-radius--l2 d_l_background-color--transparent" type="button" on:click|stopPropagation={() => dispatch('album')} disabled={!track}>
+        <button class="d_l_padding-inline--s3 d_l_border-radius--l2 d_l_background-color--transparent" type="button" onclick={(event) => { event.stopPropagation(); dispatch('album') }} disabled={!track}>
           <e-icon aria-hidden="true" style="--image: url(/icons/album.svg)"></e-icon>
         </button>
       </div>
@@ -93,8 +93,8 @@
       max={progressMax}
       step="0.1"
       value={progressValue}
-      on:click|stopPropagation
-      on:input={onSeek}
+      onclick={(event) => event.stopPropagation()}
+      oninput={onSeek}
     />
   </div>
 </section>

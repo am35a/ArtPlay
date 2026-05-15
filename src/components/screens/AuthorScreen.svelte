@@ -25,7 +25,7 @@
     <div class="albums">
       {#each artist.albums as album}
         <section class="album-block">
-          <button class="album-title" type="button" on:click={() => dispatch('openAlbum', { albumId: album.id })}>
+          <button class="album-title" type="button" onclick={() => dispatch('openAlbum', { albumId: album.id })}>
             <img src={album.cover ?? ''} alt={album.title} />
             <span>
               <span>{album.title}</span>

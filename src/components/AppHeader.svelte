@@ -19,7 +19,7 @@
     type="search"
     placeholder="Поиск: треки, авторы, альбомы"
     value={value}
-    on:input={onInput}
+    oninput={onInput}
   />
 </header>
 

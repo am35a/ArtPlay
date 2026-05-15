@@ -22,7 +22,7 @@
   {:else}
     <div class="author-grid">
       {#each artists as artist}
-        <button class="author-card" type="button" on:click={() => dispatch('open', { artistId: artist.id })}>
+        <button class="author-card" type="button" onclick={() => dispatch('open', { artistId: artist.id })}>
           <img class="author-cover" src={artist.photo ?? EMPTY_PIXEL} alt={artist.name} />
           <span class="author-main d_l_line-height--1 d_l_font-size--s1">
             <strong class="author-title">{artist.name}</strong>

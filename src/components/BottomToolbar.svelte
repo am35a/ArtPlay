@@ -21,7 +21,7 @@
         class:prime={activeScreen === item.id || (item.id === 'track' && activeScreen === 'nowPlaying')}
         style="--grid-auto-flow: row"
         disabled={item.disabled}
-        on:click={() => dispatch('go', { screen: item.id })}
+        onclick={() => dispatch('go', { screen: item.id })}
       >
         {#if item.id == 'home'}
           <e-icon class="d_l_font-size--l3" aria-hidden="true" style="--image: url(/icons/home.svg);"></e-icon>
