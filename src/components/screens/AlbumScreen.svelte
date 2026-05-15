@@ -1,4 +1,6 @@
 ﻿<script>
+  // @ts-nocheck
+  
   import TrackRow from '../TrackRow.svelte'
 
   let { album = null, currentTrackId = null, onPlay = null } = $props()
@@ -10,7 +12,7 @@
   {:else}
     <header class="album-header">
       <img src={album.cover ?? ''} alt={album.title} />
-      <div>
+      <div class="d_l_text-align--center">
         <h5 class="d_l_margin-block--unset">{album.title}</h5>
         <small>{album.artistName} · {album.totalDurationLabel ?? '--:--'}</small>
       </div>

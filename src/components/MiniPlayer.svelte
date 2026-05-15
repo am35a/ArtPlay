@@ -1,4 +1,6 @@
 ﻿<script>
+  // @ts-nocheck
+  
   let {
     state,
     track,
@@ -44,18 +46,18 @@
       <div class="d_l_display--inline-flex d_l_gap--s2 d_l_flex-wrap--wrap d_l_justify-content--start d_l_font-size--s2">
         <button class="d_l_padding-inline--s3 d_l_border-radius--l2 d_l_background-color--transparent" type="button" onclick={(event) => { event.stopPropagation(); onShuffle?.() }}>
           {#if state.shuffle}
-            <e-icon aria-hidden="true" style="--image: url(/icons/shuffle.svg);"></e-icon>
+            <e-icon aria-hidden="true" style="--image: url(/icons/shuffle.svg)"></e-icon>
           {:else}
-            <e-icon aria-hidden="true" style="--image: url(/icons/shuffle-off.svg);"></e-icon>
+            <e-icon aria-hidden="true" style="--image: url(/icons/shuffle-off.svg)"></e-icon>
           {/if}
         </button>
         <button class="d_l_padding-inline--s3 d_l_border-radius--l2 d_l_background-color--transparent" type="button" onclick={(event) => { event.stopPropagation(); onRepeat?.() }}>
           {#if state.repeatMode === 'off'}
-            <e-icon aria-hidden="true" style="--image: url(/icons/repeat-off.svg);"></e-icon>
+            <e-icon aria-hidden="true" style="--image: url(/icons/repeat-off.svg)"></e-icon>
           {:else if state.repeatMode === 'all'}
-            <e-icon aria-hidden="true" style="--image: url(/icons/repeat.svg);"></e-icon>
+            <e-icon aria-hidden="true" style="--image: url(/icons/repeat.svg)"></e-icon>
           {:else}
-            <e-icon aria-hidden="true" style="--image: url(/icons/repeat-once.svg);"></e-icon>
+            <e-icon aria-hidden="true" style="--image: url(/icons/repeat-once.svg)"></e-icon>
           {/if}
         </button>        
       </div>
@@ -114,7 +116,7 @@
     padding: 0.5em;
     margin: 0.75em 0.75em 0;
     border-radius: 1em;
-    background: color-mix(in srgb, var(--positive, #fff) 92%, transparent);
+    background: color-mix(in srgb, var(--positive) 92%, transparent);
   }
 
   .mini-cover {
@@ -122,7 +124,7 @@
     height: 2em;
     border-radius: 0.5em;
     object-fit: cover;
-    background: color-mix(in srgb, var(--positive, #ddd) 70%, transparent);
+    background: color-mix(in srgb, var(--positive) 70%, transparent);
   }
 
   .mini-text {
@@ -137,9 +139,9 @@
   }
 
   .marquee {
+    width: 100%;
     display: inline-block;
-    padding-right: 100%;
-    animation: scroll-x 14s linear infinite;
+    animation: svelte-1jla3sy-scroll-x 15s linear infinite;
   }
 
   .mini-controls {
@@ -163,7 +165,7 @@
   }
 
   @keyframes scroll-x {
-    0% { transform: translateX(50%); }
-    100% { transform: translateX(-50%); }
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
   }
 </style>

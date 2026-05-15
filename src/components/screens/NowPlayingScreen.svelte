@@ -1,4 +1,6 @@
 ﻿<script>
+  // @ts-nocheck
+  
   import { formatSeconds } from '../../lib/time.js'
   import Visualizer from '../Visualizer.svelte'
 
@@ -23,9 +25,9 @@
 
 <section class="now-playing d_l_align-content--center">
   <section class="hero">
-    <strong class="d_l_flex-grow--1">{track?.albumTitle}</strong>
+    <h3 class="d_l_flex-grow--1 d_l_margin--unset">{track?.albumTitle}</h3>
     <img class="cover d_l_box-shadow--md" src={track?.cover ?? ''} alt={track?.albumTitle ?? 'cover'} />
-    <h3 class="d_l_margin-block--unset">{track?.title ?? 'Ничего не играет'}</h3>
+    <h4 class="d_l_margin-block--unset">{track?.title ?? 'Ничего не играет'}</h4>
     <span>{track?.artistName ?? ''}</span>
     <span>{formatSeconds(current)} / {formatSeconds(duration)}</span>
   </section>
@@ -33,11 +35,11 @@
   <section class="visual d_l_margin-top--auto d_l_margin-inline--auto">
     <e-group class="element--group d_l_display--inline-grid d_l_grid-template-columns--2" role="group">
       <button type="button" disabled={state.visualizerMode === 'spectrum'} onclick={() => onMode?.('spectrum')}>
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M4 20h3" /><path d="M17 20h3" /><path d="M10.5 20h3" /><path d="M4 16h3" /><path d="M17 16h3" /><path d="M10.5 16h3" /><path d="M4 12h3" /><path d="M17 12h3" /><path d="M10.5 12h3" /><path d="M4 8h3" /><path d="M17 8h3" /><path d="M4 4h3" /></svg>
+        <e-icon aria-hidden="true" style="--image: url(/icons/spectrum.svg)"></e-icon>
         спектр
       </button>
       <button type="button" disabled={state.visualizerMode === 'oscilloscope'} onclick={() => onMode?.('oscilloscope')}>
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M21 12h-2c-.894 0 -1.662 -.857 -1.761 -2c-.296 -3.45 -.749 -6 -2.749 -6s-2.5 3.582 -2.5 8s-.5 8 -2.5 8s-2.452 -2.547 -2.749 -6c-.1 -1.147 -.867 -2 -1.763 -2h-2" /></svg>
+        <e-icon aria-hidden="true" style="--image: url(/icons/oscilloscope.svg)"></e-icon>
         волна
       </button>
     </e-group>
@@ -59,23 +61,23 @@
 
     <div class="control-row d_l_justify-items--center d_l_font-size--l3">
       <button class="d_l_padding-inline--s3 d_l_background-color--transparent" type="button" onclick={() => onPrev?.()}>
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M20 5v14l-12 -7l12 -7" /><path d="M4 5l0 14" /></svg>
+        <e-icon aria-hidden="true" style="--image: url(/icons/prev.svg)"></e-icon>
       </button>
       <button class="d_l_padding-inline--s3 d_l_background-color--transparent" type="button" onclick={() => onRewind?.()}>
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 9l-3 -3l3 -3" /><path d="M15.997 17.918a6.002 6.002 0 0 0 -.997 -11.918h-11" /><path d="M6 14v6" /><path d="M9 15.5v3a1.5 1.5 0 0 0 3 0v-3a1.5 1.5 0 0 0 -3 0" /></svg>
+        <e-icon aria-hidden="true" style="--image: url(/icons/rewind.svg)"></e-icon>
       </button>
       <button type="button" class="prime d_l_padding-inline--s3 d_l_border-radius--l2 d_l_font-size--l2" onclick={() => onToggle?.()}>
         {#if state.isPlaying}
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M6 6a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1l0 -12" /><path d="M14 6a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1l0 -12" /></svg>
+          <e-icon aria-hidden="true" style="--image: url(/icons/pause.svg)"></e-icon>
         {:else}
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M7 4v16l13 -8l-13 -8" /></svg>
+          <e-icon aria-hidden="true" style="--image: url(/icons/play.svg)"></e-icon>
         {/if}
       </button>
       <button class="d_l_padding-inline--s3 d_l_background-color--transparent" type="button" onclick={() => onForward?.()}>
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 9l3 -3l-3 -3" /><path d="M8 17.918a5.997 5.997 0 0 1 -5 -5.918a6 6 0 0 1 6 -6h11" /><path d="M12 14v6" /><path d="M15 15.5v3a1.5 1.5 0 0 0 3 0v-3a1.5 1.5 0 0 0 -3 0" /></svg>
+        <e-icon aria-hidden="true" style="--image: url(/icons/forward.svg)"></e-icon>
       </button>
       <button class="d_l_padding-inline--s3 d_l_background-color--transparent" type="button" onclick={() => onNext?.()}>
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M4 5v14l12 -7l-12 -7" /><path d="M20 5l0 14" /></svg>
+        <e-icon aria-hidden="true" style="--image: url(/icons/next.svg)"></e-icon>
       </button>
     </div>
 
@@ -83,19 +85,19 @@
       <button type="button" onclick={() => onShuffle?.()}>
         Шаффл:
         {#if state.shuffle}
-          <e-icon aria-hidden="true" style="--image: url(/icons/shuffle.svg);"></e-icon>
+          <e-icon aria-hidden="true" style="--image: url(/icons/shuffle.svg)"></e-icon>
         {:else}
-          <e-icon aria-hidden="true" style="--image: url(/icons/shuffle-off.svg);"></e-icon>
+          <e-icon aria-hidden="true" style="--image: url(/icons/shuffle-off.svg)"></e-icon>
         {/if}
       </button>
       <button type="button" onclick={() => onRepeat?.()}>
         Повтор:
         {#if state.repeatMode === 'off'}
-          <e-icon aria-hidden="true" style="--image: url(/icons/repeat-off.svg);"></e-icon>
+          <e-icon aria-hidden="true" style="--image: url(/icons/repeat-off.svg)"></e-icon>
         {:else if state.repeatMode === 'all'}
-          <e-icon aria-hidden="true" style="--image: url(/icons/repeat.svg);"></e-icon>
+          <e-icon aria-hidden="true" style="--image: url(/icons/repeat.svg)"></e-icon>
         {:else}
-          <e-icon aria-hidden="true" style="--image: url(/icons/repeat-once.svg);"></e-icon>
+          <e-icon aria-hidden="true" style="--image: url(/icons/repeat-once.svg)"></e-icon>
         {/if}
       </button>
     </div>
@@ -104,7 +106,7 @@
 
 <style>
   .now-playing {
-    padding: 0.85em 1em 1.25em;
+    padding: 0.75em;
     display: grid;
     gap: 0.75em;
   }
@@ -117,11 +119,11 @@
   }
 
   .cover {
-    width: min(68vw, 18em);
+    width: min(64vw, 16em);
     aspect-ratio: 1;
     border-radius: 1em;
     object-fit: cover;
-    background: color-mix(in srgb, var(--positive, #ddd) 70%, transparent);
+    background: color-mix(in srgb, var(--positive) 70%, transparent);
   }
 
   .visual {

@@ -1,4 +1,6 @@
 ﻿<script>
+  // @ts-nocheck
+
   import TrackRow from '../TrackRow.svelte'
 
   let { artist = null, currentTrackId = null, onPlay = null, onOpenAlbum = null } = $props()

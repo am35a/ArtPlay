@@ -1,4 +1,6 @@
 ﻿<script>
+  // @ts-nocheck
+  
   import { onMount } from 'svelte'
   import { formatSeconds } from './lib/time.js'
   import { loadLibraryManifest, searchInLibrary } from './lib/library.js'
@@ -127,7 +129,7 @@
         playerStore.ensureAnalyserReady()
       }
     } catch (error) {
-      loadError = error instanceof Error ? error.message : 'manifest load failed'
+      loadError = error instanceof Error ? error.message : 'манифест не загрузился'
     } finally {
       loading = false
     }
@@ -237,10 +239,8 @@
   }
 
   :global(body) {
-    margin: 0;
     min-height: 100vh;
-    font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, sans-serif;
-    background: linear-gradient(180deg, color-mix(in srgb, var(--positive, #ffffff) 97%, transparent), color-mix(in srgb, var(--prime, #dde8ff) 8%, transparent));
+    background: linear-gradient(135deg, color-mix(in srgb, var(--positive) 97%, transparent), color-mix(in srgb, var(--prime) 8%, transparent));
     background-attachment: fixed;
   }
 

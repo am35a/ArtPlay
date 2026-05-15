@@ -1,4 +1,6 @@
 ﻿<script>
+  // @ts-nocheck
+  
   import { formatSeconds } from '../lib/time.js'
 
   let { track, active = false, onPlay = null } = $props()

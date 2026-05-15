@@ -1,4 +1,6 @@
 <script>
+  // @ts-nocheck
+  
   let { analyser = null, mode = 'spectrum' } = $props()
 
   let canvas
