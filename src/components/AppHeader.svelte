@@ -1,12 +1,9 @@
 ﻿<script>
-  import { createEventDispatcher } from 'svelte'
-
   export let value = ''
-
-  const dispatch = createEventDispatcher()
+  export let onSearch = null
 
   function onInput(event) {
-    dispatch('search', { value: event.currentTarget.value })
+    onSearch?.(event.currentTarget.value)
   }
 </script>
 

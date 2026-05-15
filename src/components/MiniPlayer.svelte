@@ -1,23 +1,28 @@
 ﻿<script>
-  import { createEventDispatcher } from 'svelte'
-
   export let state
   export let track
   export let currentTimeLabel
   export let durationLabel
-
-  const dispatch = createEventDispatcher()
+  export let onOpen = null
+  export let onToggle = null
+  export let onPrev = null
+  export let onNext = null
+  export let onShuffle = null
+  export let onRepeat = null
+  export let onAuthor = null
+  export let onAlbum = null
+  export let onSeek = null
 
   function onContainerKeydown(event) {
     if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault()
-      dispatch('open')
+      onOpen?.()
     }
   }
 
-  function onSeek(event) {
+  function handleSeek(event) {
     const value = Number(event.currentTarget.value)
-    dispatch('seek', { value })
+    onSeek?.(value)
   }
 
   $: progressMax = Number.isFinite(state.duration) && state.duration > 0 ? state.duration : 0
@@ -29,20 +34,20 @@
   class="mini-player d_l_text-align--center d_l_box-shadow--md"
   role="button"
   tabindex="0"
-  onclick={() => dispatch('open')}
+  onclick={() => onOpen?.()}
   onkeydown={onContainerKeydown}
   theme="light"
 >
     <div class="mini-controls d_l_font-size--l3 d_l_align-items--center">
       <div class="d_l_display--inline-flex d_l_gap--s2 d_l_flex-wrap--wrap d_l_justify-content--start d_l_font-size--s2">
-        <button class="d_l_padding-inline--s3 d_l_border-radius--l2 d_l_background-color--transparent" type="button" onclick={(event) => { event.stopPropagation(); dispatch('shuffle') }}>
+        <button class="d_l_padding-inline--s3 d_l_border-radius--l2 d_l_background-color--transparent" type="button" onclick={(event) => { event.stopPropagation(); onShuffle?.() }}>
           {#if state.shuffle}
             <e-icon aria-hidden="true" style="--image: url(/icons/shuffle.svg);"></e-icon>
           {:else}
             <e-icon aria-hidden="true" style="--image: url(/icons/shuffle-off.svg);"></e-icon>
           {/if}
         </button>
-        <button class="d_l_padding-inline--s3 d_l_border-radius--l2 d_l_background-color--transparent" type="button" onclick={(event) => { event.stopPropagation(); dispatch('repeat') }}>
+        <button class="d_l_padding-inline--s3 d_l_border-radius--l2 d_l_background-color--transparent" type="button" onclick={(event) => { event.stopPropagation(); onRepeat?.() }}>
           {#if state.repeatMode === 'off'}
             <e-icon aria-hidden="true" style="--image: url(/icons/repeat-off.svg);"></e-icon>
           {:else if state.repeatMode === 'all'}
@@ -52,24 +57,24 @@
           {/if}
         </button>        
       </div>
-      <button class="d_l_padding-inline--s3 d_l_border-radius--l2 d_l_background-color--transparent" type="button" onclick={(event) => { event.stopPropagation(); dispatch('prev') }}>
+      <button class="d_l_padding-inline--s3 d_l_border-radius--l2 d_l_background-color--transparent" type="button" onclick={(event) => { event.stopPropagation(); onPrev?.() }}>
         <e-icon aria-hidden="true" style="--image: url(/icons/prev.svg)"></e-icon>
       </button>
-      <button type="button" class="d_l_padding-inline--s3 d_l_border-radius--l2 d_l_font-size--l2 prime" onclick={(event) => { event.stopPropagation(); dispatch('toggle') }}>
+      <button type="button" class="d_l_padding-inline--s3 d_l_border-radius--l2 d_l_font-size--l2 prime" onclick={(event) => { event.stopPropagation(); onToggle?.() }}>
         {#if state.isPlaying}
           <e-icon aria-hidden="true" style="--image: url(/icons/pause.svg)"></e-icon>
         {:else}
           <e-icon aria-hidden="true" style="--image: url(/icons/play.svg)"></e-icon>
         {/if}
       </button>
-      <button class="d_l_padding-inline--s3 d_l_border-radius--l2 d_l_background-color--transparent" type="button" onclick={(event) => { event.stopPropagation(); dispatch('next') }}>
+      <button class="d_l_padding-inline--s3 d_l_border-radius--l2 d_l_background-color--transparent" type="button" onclick={(event) => { event.stopPropagation(); onNext?.() }}>
         <e-icon aria-hidden="true" style="--image: url(/icons/next.svg)"></e-icon>
       </button>
       <div class="d_l_display--inline-flex d_l_gap--s2 d_l_flex-wrap--wrap d_l_justify-content--end d_l_font-size--s2">
-        <button class="d_l_padding-inline--s3 d_l_border-radius--l2 d_l_background-color--transparent" type="button" onclick={(event) => { event.stopPropagation(); dispatch('author') }} disabled={!track}>
+        <button class="d_l_padding-inline--s3 d_l_border-radius--l2 d_l_background-color--transparent" type="button" onclick={(event) => { event.stopPropagation(); onAuthor?.() }} disabled={!track}>
           <e-icon aria-hidden="true" style="--image: url(/icons/author.svg)"></e-icon>
         </button>
-        <button class="d_l_padding-inline--s3 d_l_border-radius--l2 d_l_background-color--transparent" type="button" onclick={(event) => { event.stopPropagation(); dispatch('album') }} disabled={!track}>
+        <button class="d_l_padding-inline--s3 d_l_border-radius--l2 d_l_background-color--transparent" type="button" onclick={(event) => { event.stopPropagation(); onAlbum?.() }} disabled={!track}>
           <e-icon aria-hidden="true" style="--image: url(/icons/album.svg)"></e-icon>
         </button>
       </div>
@@ -94,7 +99,7 @@
       step="0.1"
       value={progressValue}
       onclick={(event) => event.stopPropagation()}
-      oninput={onSeek}
+      oninput={handleSeek}
     />
   </div>
 </section>

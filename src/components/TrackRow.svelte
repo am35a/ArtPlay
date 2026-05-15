@@ -1,20 +1,18 @@
 ﻿<script>
-  import { createEventDispatcher } from 'svelte'
   import { formatSeconds } from '../lib/time.js'
 
   export let track
   export let active = false
+  export let onPlay = null
 
-  const dispatch = createEventDispatcher()
-
-  function onPlay() {
-    dispatch('play', { trackId: track.id })
+  function handlePlay() {
+    onPlay?.(track.id)
   }
 
   $: durationLabel = track.durationLabel ?? formatSeconds(track.durationSec)
 </script>
 
-<button class:success={active} class="track-row" type="button" onclick={onPlay}>
+<button class:success={active} class="track-row" type="button" onclick={handlePlay}>
   <img class="track-cover" src={track.cover ?? ''} alt={track.albumTitle} />
   <span class="track-main d_l_line-height--1 d_l_font-size--s1">
     <strong class="track-title">{track.title}</strong>

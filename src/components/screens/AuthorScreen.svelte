@@ -1,11 +1,10 @@
 ﻿<script>
-  import { createEventDispatcher } from 'svelte'
   import TrackRow from '../TrackRow.svelte'
 
   export let artist = null
   export let currentTrackId = null
-
-  const dispatch = createEventDispatcher()
+  export let onPlay = null
+  export let onOpenAlbum = null
 </script>
 
 <section class="screen">
@@ -25,7 +24,7 @@
     <div class="albums">
       {#each artist.albums as album}
         <section class="album-block">
-          <button class="album-title" type="button" onclick={() => dispatch('openAlbum', { albumId: album.id })}>
+          <button class="album-title" type="button" onclick={() => onOpenAlbum?.(album.id)}>
             <img src={album.cover ?? ''} alt={album.title} />
             <span>
               <span>{album.title}</span>
@@ -40,7 +39,7 @@
               <TrackRow
                 track={track}
                 active={currentTrackId === track.id}
-                on:play={(event) => dispatch('play', event.detail)}
+                onPlay={onPlay}
               />
             {/each}
           </div>

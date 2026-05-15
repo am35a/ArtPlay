@@ -1,11 +1,9 @@
 ﻿<script>
-  import { createEventDispatcher } from 'svelte'
   import TrackRow from '../TrackRow.svelte'
 
   export let tracks = []
   export let currentTrackId = null
-
-  const dispatch = createEventDispatcher()
+  export let onPlay = null
 </script>
 
 <section class="screen">
@@ -22,7 +20,7 @@
         <TrackRow
           track={track}
           active={currentTrackId === track.id}
-          on:play={(event) => dispatch('play', event.detail)}
+          onPlay={onPlay}
         />
       {/each}
     </div>

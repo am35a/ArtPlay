@@ -167,42 +167,42 @@
         {state}
         track={currentTrack}
         analyser={playerStore.getAnalyser()}
-        on:seek={(event) => playerStore.seekTo(event.detail.value)}
-        on:prev={() => playerStore.playPrev()}
-        on:next={() => playerStore.playNext()}
-        on:rewind={() => playerStore.skipBy(-10)}
-        on:forward={() => playerStore.skipBy(10)}
-        on:toggle={() => playerStore.togglePlayPause()}
-        on:shuffle={() => playerStore.toggleShuffle()}
-        on:repeat={() => playerStore.cycleRepeat()}
-        on:mode={(event) => playerStore.setVisualizerMode(event.detail.mode)}
+        onSeek={(value) => playerStore.seekTo(value)}
+        onPrev={() => playerStore.playPrev()}
+        onNext={() => playerStore.playNext()}
+        onRewind={() => playerStore.skipBy(-10)}
+        onForward={() => playerStore.skipBy(10)}
+        onToggle={() => playerStore.togglePlayPause()}
+        onShuffle={() => playerStore.toggleShuffle()}
+        onRepeat={() => playerStore.cycleRepeat()}
+        onMode={(mode) => playerStore.setVisualizerMode(mode)}
       />
       <BottomToolbar
         activeScreen={state.activeScreen}
-        on:go={(event) => onToolbarGo(event.detail.screen)}
+        onGo={onToolbarGo}
       />
     </main>
   {:else}
     <main class="app-shell">
-      <AppHeader value={query} on:search={(event) => playerStore.setSearchQuery(event.detail.value)} />
+      <AppHeader value={query} onSearch={(value) => playerStore.setSearchQuery(value)} />
 
       <section class="screen-wrap">
         {#if state.activeScreen === 'home'}
-          <HomeScreen tracks={homeTracks} currentTrackId={state.currentTrackId} on:play={(event) => playFromHome(event.detail.trackId)} />
+          <HomeScreen tracks={homeTracks} currentTrackId={state.currentTrackId} onPlay={playFromHome} />
         {:else if state.activeScreen === 'authors'}
-          <AuthorsScreen artists={authorCards} on:open={(event) => playerStore.openAuthor(event.detail.artistId)} />
+          <AuthorsScreen artists={authorCards} onOpen={(artistId) => playerStore.openAuthor(artistId)} />
         {:else if state.activeScreen === 'author'}
           <AuthorScreen
             artist={selectedAuthor}
             currentTrackId={state.currentTrackId}
-            on:play={(event) => playFromAuthor(event.detail.trackId)}
-            on:openAlbum={(event) => playerStore.openAlbum(event.detail.albumId)}
+            onPlay={playFromAuthor}
+            onOpenAlbum={(albumId) => playerStore.openAlbum(albumId)}
           />
         {:else if state.activeScreen === 'album'}
           <AlbumScreen
             album={selectedAlbum}
             currentTrackId={state.currentTrackId}
-            on:play={(event) => playFromAlbum(event.detail.trackId)}
+            onPlay={playFromAlbum}
           />
         {/if}
       </section>
@@ -212,20 +212,20 @@
         track={currentTrack}
         {currentTimeLabel}
         {durationLabel}
-        on:open={() => playerStore.openNowPlaying()}
-        on:toggle={() => playerStore.togglePlayPause()}
-        on:prev={() => playerStore.playPrev()}
-        on:next={() => playerStore.playNext()}
-        on:shuffle={() => playerStore.toggleShuffle()}
-        on:repeat={() => playerStore.cycleRepeat()}
-        on:author={() => playerStore.openCurrentTrackAuthor()}
-        on:album={() => playerStore.openCurrentTrackAlbum()}
-        on:seek={(event) => playerStore.seekTo(event.detail.value)}
+        onOpen={() => playerStore.openNowPlaying()}
+        onToggle={() => playerStore.togglePlayPause()}
+        onPrev={() => playerStore.playPrev()}
+        onNext={() => playerStore.playNext()}
+        onShuffle={() => playerStore.toggleShuffle()}
+        onRepeat={() => playerStore.cycleRepeat()}
+        onAuthor={() => playerStore.openCurrentTrackAuthor()}
+        onAlbum={() => playerStore.openCurrentTrackAlbum()}
+        onSeek={(value) => playerStore.seekTo(value)}
       />
 
       <BottomToolbar
         activeScreen={state.activeScreen}
-        on:go={(event) => onToolbarGo(event.detail.screen)}
+        onGo={onToolbarGo}
       />
     </main>
   {/if}

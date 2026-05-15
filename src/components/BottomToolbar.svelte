@@ -1,9 +1,6 @@
 ﻿<script>
-  import { createEventDispatcher } from 'svelte'
-
   export let activeScreen = 'home'
-
-  const dispatch = createEventDispatcher()
+  export let onGo = null
 
   const items = [
     { id: 'home', label: 'Главная', disabled: false },
@@ -21,7 +18,7 @@
         class:prime={activeScreen === item.id || (item.id === 'track' && activeScreen === 'nowPlaying')}
         style="--grid-auto-flow: row"
         disabled={item.disabled}
-        onclick={() => dispatch('go', { screen: item.id })}
+        onclick={() => onGo?.(item.id)}
       >
         {#if item.id == 'home'}
           <e-icon class="d_l_font-size--l3" aria-hidden="true" style="--image: url(/icons/home.svg);"></e-icon>
