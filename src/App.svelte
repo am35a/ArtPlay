@@ -14,9 +14,9 @@
   import AlbumScreen from './components/screens/AlbumScreen.svelte'
   import NowPlayingScreen from './components/screens/NowPlayingScreen.svelte'
 
-  let library = null
-  let loadError = ''
-  let loading = true
+  let library = $state(null)
+  let loadError = $state('')
+  let loading = $state(true)
 
   function queryMatch(entity, query) {
     return searchInLibrary(query, entity)
@@ -133,27 +133,27 @@
     }
   })
 
-  $: state = $playerStore
-  $: query = state.searchQuery ?? ''
+  const state = $derived($playerStore)
+  const query = $derived(state.searchQuery ?? '')
 
-  $: homeTracks = library ? library.tracks.filter((track) => queryMatch(track, query)) : []
-  $: authorCards = library ? library.artists.filter((artist) => artistMatches(artist, query)) : []
+  const homeTracks = $derived(library ? library.tracks.filter((track) => queryMatch(track, query)) : [])
+  const authorCards = $derived(library ? library.artists.filter((artist) => artistMatches(artist, query)) : [])
 
-  $: selectedAuthorBase = library && state.selectedArtistId ? library.artistById.get(state.selectedArtistId) : null
-  $: selectedAuthor = selectedAuthorBase ? getAuthorView(selectedAuthorBase, query) : null
-  $: authorTracks = selectedAuthor
+  const selectedAuthorBase = $derived(library && state.selectedArtistId ? library.artistById.get(state.selectedArtistId) : null)
+  const selectedAuthor = $derived(selectedAuthorBase ? getAuthorView(selectedAuthorBase, query) : null)
+  const authorTracks = $derived(selectedAuthor
     ? selectedAuthor.albums.flatMap((album) => album.tracks)
-    : []
+    : [])
 
-  $: selectedAlbumBase = library && state.selectedAlbumId ? library.albumById.get(state.selectedAlbumId) : null
-  $: selectedAlbum = selectedAlbumBase ? getAlbumView(selectedAlbumBase, query) : null
-  $: albumTracks = selectedAlbum?.tracks ?? []
+  const selectedAlbumBase = $derived(library && state.selectedAlbumId ? library.albumById.get(state.selectedAlbumId) : null)
+  const selectedAlbum = $derived(selectedAlbumBase ? getAlbumView(selectedAlbumBase, query) : null)
+  const albumTracks = $derived(selectedAlbum?.tracks ?? [])
 
-  $: currentTrack = library && state.currentTrackId ? library.trackById.get(state.currentTrackId) ?? null : null
-  $: currentTimeLabel = formatSeconds(state.currentTime)
-  $: durationLabel = formatSeconds(state.duration || currentTrack?.durationSec || 0)
+  const currentTrack = $derived(library && state.currentTrackId ? library.trackById.get(state.currentTrackId) ?? null : null)
+  const currentTimeLabel = $derived(formatSeconds(state.currentTime))
+  const durationLabel = $derived(formatSeconds(state.duration || currentTrack?.durationSec || 0))
 
-  $: hideGlobal = state.activeScreen === 'nowPlaying'
+  const hideGlobal = $derived(state.activeScreen === 'nowPlaying')
 </script>
 
 {#if loading}
