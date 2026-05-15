@@ -1,6 +1,5 @@
-﻿<script>
-  export let value = ''
-  export let onSearch = null
+<script>
+  let { value = '', onSearch = null } = $props()
 
   function onInput(event) {
     onSearch?.(event.currentTarget.value)
@@ -36,3 +35,4 @@
     font-size: 1.1em;
   }
 </style>
+

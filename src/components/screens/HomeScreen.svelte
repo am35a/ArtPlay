@@ -1,9 +1,7 @@
 ﻿<script>
   import TrackRow from '../TrackRow.svelte'
 
-  export let tracks = []
-  export let currentTrackId = null
-  export let onPlay = null
+  let { tracks = [], currentTrackId = null, onPlay = null } = $props()
 </script>
 
 <section class="screen">

@@ -1,6 +1,5 @@
 ﻿<script>
-  export let activeScreen = 'home'
-  export let onGo = null
+  let { activeScreen = 'home', onGo = null } = $props()
 
   const items = [
     { id: 'home', label: 'Главная', disabled: false },
