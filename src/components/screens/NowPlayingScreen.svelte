@@ -2,21 +2,23 @@
   import { formatSeconds } from '../../lib/time.js'
   import Visualizer from '../Visualizer.svelte'
 
-  export let state
-  export let track
-  export let analyser
-  export let onSeek = null
-  export let onPrev = null
-  export let onNext = null
-  export let onRewind = null
-  export let onForward = null
-  export let onToggle = null
-  export let onShuffle = null
-  export let onRepeat = null
-  export let onMode = null
+  let {
+    state,
+    track,
+    analyser,
+    onSeek = null,
+    onPrev = null,
+    onNext = null,
+    onRewind = null,
+    onForward = null,
+    onToggle = null,
+    onShuffle = null,
+    onRepeat = null,
+    onMode = null,
+  } = $props()
 
-  $: duration = Number.isFinite(state.duration) ? state.duration : 0
-  $: current = Number.isFinite(state.currentTime) ? state.currentTime : 0
+  const duration = $derived(Number.isFinite(state.duration) ? state.duration : 0)
+  const current = $derived(Number.isFinite(state.currentTime) ? state.currentTime : 0)
 </script>
 
 <section class="now-playing d_l_align-content--center">

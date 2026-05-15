@@ -1,17 +1,19 @@
 ﻿<script>
-  export let state
-  export let track
-  export let currentTimeLabel
-  export let durationLabel
-  export let onOpen = null
-  export let onToggle = null
-  export let onPrev = null
-  export let onNext = null
-  export let onShuffle = null
-  export let onRepeat = null
-  export let onAuthor = null
-  export let onAlbum = null
-  export let onSeek = null
+  let {
+    state,
+    track,
+    currentTimeLabel,
+    durationLabel,
+    onOpen = null,
+    onToggle = null,
+    onPrev = null,
+    onNext = null,
+    onShuffle = null,
+    onRepeat = null,
+    onAuthor = null,
+    onAlbum = null,
+    onSeek = null,
+  } = $props()
 
   function onContainerKeydown(event) {
     if (event.key === 'Enter' || event.key === ' ') {
@@ -25,9 +27,9 @@
     onSeek?.(value)
   }
 
-  $: progressMax = Number.isFinite(state.duration) && state.duration > 0 ? state.duration : 0
-  $: progressValue = Number.isFinite(state.currentTime) ? state.currentTime : 0
-  $: title = track ? `${track.title} — ${track.artistName}` : 'Ничего не играет'
+  const progressMax = $derived(Number.isFinite(state.duration) && state.duration > 0 ? state.duration : 0)
+  const progressValue = $derived(Number.isFinite(state.currentTime) ? state.currentTime : 0)
+  const title = $derived(track ? `${track.title} — ${track.artistName}` : 'Ничего не играет')
 </script>
 
 <section

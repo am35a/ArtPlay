@@ -1,15 +1,13 @@
 ﻿<script>
   import { formatSeconds } from '../lib/time.js'
 
-  export let track
-  export let active = false
-  export let onPlay = null
+  let { track, active = false, onPlay = null } = $props()
 
   function handlePlay() {
     onPlay?.(track.id)
   }
 
-  $: durationLabel = track.durationLabel ?? formatSeconds(track.durationSec)
+  const durationLabel = $derived(track.durationLabel ?? formatSeconds(track.durationSec))
 </script>
 
 <button class:success={active} class="track-row" type="button" onclick={handlePlay}>
