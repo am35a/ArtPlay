@@ -1,8 +1,5 @@
-﻿<script>
-  import { onDestroy } from 'svelte'
-
-  export let analyser = null
-  export let mode = 'spectrum'
+<script>
+  let { analyser = null, mode = 'spectrum' } = $props()
 
   let canvas
   let raf = 0
@@ -92,21 +89,22 @@
     raf = requestAnimationFrame(frame)
   }
 
-  $: if (canvas) {
+  $effect(() => {
+    if (!canvas) return
     resizeCanvas()
-  }
+  })
 
-  $: {
+  $effect(() => {
+    if (!canvas) return
     cancelAnimationFrame(raf)
     raf = requestAnimationFrame(frame)
-  }
+    return () => cancelAnimationFrame(raf)
+  })
 
-  const onResize = () => resizeCanvas()
-  window.addEventListener('resize', onResize)
-
-  onDestroy(() => {
-    window.removeEventListener('resize', onResize)
-    cancelAnimationFrame(raf)
+  $effect(() => {
+    const onResize = () => resizeCanvas()
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
   })
 </script>
 
