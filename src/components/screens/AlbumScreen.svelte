@@ -6,19 +6,24 @@
   let { album = null, currentTrackId = null, onPlay = null } = $props()
 </script>
 
-<section class="screen">
+<section class="d_l_display--grid d_l_gap--s1">
   {#if !album}
     <p>Альбом не выбран.</p>
   {:else}
-    <header class="album-header">
-      <img src={album.cover ?? ''} alt={album.title} />
+    <header class="d_l_display--grid d_l_gap--s1 d_l_justify-content--center d_l_justify-items--center">
+      <img
+        class="d_l_width--50 d_l_border-radius--s1 object-fit--cover max-width background-color"
+        style="--max-width: 20em; --background-color: color-mix(in srgb, var(--positive) 70%, transparent)"
+        src={album.cover ?? ''}
+        alt={album.title}
+      />
       <div class="d_l_text-align--center">
         <h5 class="d_l_margin-block--unset">{album.title}</h5>
         <small>{album.artistName} · {album.totalDurationLabel ?? '--:--'}</small>
       </div>
     </header>
 
-    <div class="track-list">
+    <div class="d_l_display--grid d_l_gap--s2">
       {#each album.tracks as track}
         <TrackRow
           track={track}
@@ -29,30 +34,3 @@
     </div>
   {/if}
 </section>
-
-<style>
-  .screen {
-    display: grid;
-    gap: 0.75em;
-  }
-
-  .album-header {
-    display: grid;
-    gap: 0.75em;
-    justify-content: center;
-    justify-items: center;
-  }
-
-  .album-header img {
-    width: 50%;
-    max-width: 20em;
-    border-radius: 0.75em;
-    object-fit: cover;
-    background: color-mix(in srgb, var(--positive, #ddd) 70%, transparent);
-  }
-
-  .track-list {
-    display: grid;
-    gap: 0.5em;
-  }
-</style>
