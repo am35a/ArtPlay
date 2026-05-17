@@ -22,12 +22,14 @@ S4 сочетает два подхода:
 
 ## Подключение
 
+Рекомендуемый способ подключения - через s4.min.js, который автоматически загружает необходимые CSS-файлы.
+
 ```html
 <head>
     <script src="/s4/js/s4.min.js"></script>
 </head>
 <body onload="S4()">
-    <!-- JS-фреймворк приложения подключается отдельно -->
+    <!-- JS-фреймворк (svelte, vue и т.п.) в приложение подключается отдельно -->
 </body>
 ```
 
@@ -57,25 +59,45 @@ S4 сочетает два подхода:
 
 Важно: это не единственный режим. Можно настроить «один utility CSS на устройство/ориентацию».
 
-## Нейминг utility-классов
+## Нейминг utility-классов "*--{value}"
 
 Формат:
 
 ```text
 {device}_{orientation}_{property}--{value}
 ```
+для части utility-классов доступны классы без device/orientation-префиксов
+
+```text
+{property}--{value}
+```
 
 Примеры:
 - `d_l_display--flex`
 - `m_p_gap--md`
 - `t_l_align-items--center`
+- `object-fit--cover`
+
+Отличие: отсутствие `{device}_{orientation}_` в нейминге классов означет что класс применяется ко всем устройствам/ориентаций, количество таких классов ограничено.
+Важно: перед использованием size-классов (gap, padding, margin и т.п.) обязательно надо проверять соответствие значений `*--{value}` значениям в `themes.css`.
+
+## Проверка значений перед использованием utility-классов "*--{value}"
+
+Важно: перед использованием utility-классов `*--{value}` проверьте, есть ли нужное значение в `themes.css` для целевого устройства. Если значения там нет — используйте базовый класс + inline style.
+
+Примеры:
+- правильно - `d_l_width--50` — если 50 есть в themes.css
+- неправильно - `d_l_width--64vw` — такого значения нет → использовать `class="width" style="--width: 64vw"`
 
 ## Базовые классы и inline CSS-переменные
 
+Важно: классы вида `bottom`, `z-index`, `width`, `grid-template-columns` - без префикса устройства и без значения. Они активируют CSS-переменную, значение задаётся через inline style.
+
 Примеры:
-- `grid-template-columns` + `style="--grid-template-columns: 1fr 1fr"`
-- `width` + `style="--width: 2.5em"`
-- `line-height` + `style="--line-height: 1.5"`
+- `class=" grid-template-columns"` + `style="--grid-template-columns: 1fr 2fr"`
+- `class=" width"` + `style="--width: 2.5em"`
+- `class=" line-height"` + `style="--line-height: 1.5"`
+- `<div class="bottom z-index" style="--bottom: .25em; --z-index: 20;">`
 
 Для device/orientation можно задавать и префиксные переменные:
 - `--d_l_line-height`
@@ -93,7 +115,7 @@ S4 сочетает два подхода:
 
 Реально присутствуют в `elements.css`:
 - `e-group` / `.element--group`
-- `e-icon` / `.element--image`
+- `e-icon` / `.element--icon`
 - `e-line`
 - `e-truncate` / `.element--truncate`
 - `e-badge` / `.element--badge`
@@ -161,6 +183,36 @@ S4 сочетает два подхода:
 </table>
 ```
 
+## В каких исходниках искать классы и значения переменных
+
+В файлах
+`s4/css/{device}/{orientation}.css`
+- `s4/css/desktop/landscape.css`
+- `s4/css/desktop/portrait.css`
+- `s4/css/mobile/landscape.css`
+- `s4/css/mobile/portrait.css`
+- `s4/css/tablet/landscape.css`
+- `s4/css/tablet/portrait.css`
+классы без префикса устройства: `object-fit--cover` и др.
+классы с префиксами устройств: `d_l_display--flex`, `d_l_gap--md`, `d_l_border-radius--s1` и др.
+базовые классы без префикса и значения: `max-width`, `width` и др.
+
+В файлах
+`s4/css/{device}/themes.css`
+- `s4/css/desktop/themes.css`
+- `s4/css/mobile/themes.css`
+- `s4/css/tablet/themes.css`
+находятся значения всех CSS-переменных (размеры, цвета, отступы) в блоках @layer > @scope > :scope
+`
+@layer themes {
+  @scope ([theme=light]) {
+    :scope {
+        /* список переменных*/
+    }
+  }
+}
+`
+
 ## Где смотреть исходники
 
 - `public/s4/js/s4.min.js`
@@ -176,5 +228,3 @@ S4 сочетает два подхода:
 - `public/s4/css/tablet/landscape.css`
 - `public/s4/css/tablet/portrait.css`
 - `public/s4/css/tablet/themes.css`
-
-
