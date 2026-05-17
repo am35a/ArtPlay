@@ -115,23 +115,13 @@
 <style>
   .visualizer {
     position: absolute;
-    width: min(100%, 1280px);
-    max-width: 1280px;
-    height: 32px;
-    max-height: 32px;
+    width: min(100%, 80em);
+    max-width: 80em;
+    height: 2em;
+    max-height: 2em;
     border-radius: 0.5em;
-    background: #10141b;
+    background: var(--positive);
     left: 50%;
     transform: translateX(-50%);
-
-    grid-row: 1/-1;
-    grid-column: 1/-1;
   }
-
-  /* .visualizer {
-    width: 100%;
-    height: 8em;
-    border-radius: 0.9em;
-    background: #10141b;
-  } */
 </style>

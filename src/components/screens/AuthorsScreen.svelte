@@ -59,7 +59,7 @@
     height: 2.5em;
     object-fit: cover;
     border-radius: 0.25em;
-    background: color-mix(in srgb, var(--positive, #ddd) 70%, transparent);
+    background: color-mix(in srgb, var(--positive) 70%, transparent);
   }
 
   .author-main {

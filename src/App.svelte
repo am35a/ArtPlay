@@ -240,7 +240,7 @@
 
   :global(body) {
     min-height: 100vh;
-    background: linear-gradient(135deg, color-mix(in srgb, var(--positive) 97%, transparent), color-mix(in srgb, var(--prime) 8%, transparent));
+    background: linear-gradient(-35deg, color-mix(in srgb, var(--positive) 97%, transparent), color-mix(in srgb, var(--prime) 8%, transparent));
     background-attachment: fixed;
   }
 

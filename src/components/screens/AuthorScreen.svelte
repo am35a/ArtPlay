@@ -23,7 +23,7 @@
             <img class="width height d_l_border-radius--s3 object-fit--cover background-color" style="--width: 4em; --height: 4em; --background-color: color-mix(in srgb, var(--positive) 70%, transparent)" src={album.cover ?? ''} alt={album.title} />
             <span class="d_l_display--block element--truncate">
               <span class="d_l_display--block element--truncate">{album.title}</span>
-              <small class="d_l_display--block" style="opacity: 0.75">{album.tracks.length} треков ·  {album.totalDurationLabel ?? '--:--'}</small>
+              <small class="d_l_display--block d_l_color--negative--dark">{album.tracks.length} треков ·  {album.totalDurationLabel ?? '--:--'}</small>
             </span>
           </button>
           <e-line class="d_l_margin-block--s2" role="separator"></e-line>

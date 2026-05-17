@@ -35,7 +35,8 @@
 </script>
 
 <section
-  class="mini-player d_l_text-align--center d_l_box-shadow--md"
+  class="mini-player d_l_text-align--center d_l_box-shadow--md bottom"
+  style="--d_p_bottom: 5.5em; --d_l_bottom: 4em;"
   role="button"
   tabindex="0"
   onclick={() => onOpen?.()}
@@ -111,7 +112,6 @@
 <style>
   .mini-player {
     position: sticky;
-    bottom: 5em;
     z-index: 15;
     padding: 0.5em;
     margin: 0.75em 0.75em 0;

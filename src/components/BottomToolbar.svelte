@@ -10,14 +10,13 @@
   ]
 </script>
 
-<menu class="toolbar backdrop-filter" style="--backdrop-filter: contrast(1.3) saturate(2) grayscale(.8) blur(1em);" type="toolbar">
+<menu class="toolbar d_l_position--sticky d_l_margin-inline--s3 d_l_margin-bottom--s3 d_l_display--grid d_l_gap--s2 d_l_padding--s2 d_l_grid-template-columns--3 backdrop-filter bottom z-index" style="--backdrop-filter: contrast(1.3) saturate(2) grayscale(.8) blur(1em); --bottom: .25em; --z-index: 20;" type="toolbar">
   {#each items as item}
     <li>
       <button
-        class="d_l_justify-items--center"
+        class="d_l_justify-items--center d_p_padding--s2 d_p_grid-auto-flow--row"
         type="button"
         class:prime={activeScreen === item.id || (item.id === 'track' && activeScreen === 'nowPlaying')}
-        style="--grid-auto-flow: row"
         disabled={item.disabled}
         onclick={() => onGo?.(item.id)}
       >
@@ -33,17 +32,3 @@
     </li>
   {/each}
 </menu>
-
-<style>
-  .toolbar {
-    position: sticky;
-    bottom: .25em;
-    margin-inline: .25em;
-    margin-bottom: .25em;
-    z-index: 20;
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 0.5em;
-    padding: 0.5em;
-  }
-</style>

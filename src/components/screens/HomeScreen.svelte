@@ -6,7 +6,7 @@
   let { tracks = [], currentTrackId = null, onPlay = null } = $props()
 </script>
 
-<section class="screen">
+<section class="screen d_l_display--grid d_l_gap--s1">
   <header class="d_l_display--flex d_l_align-items--baseline">
     <h5 class="d_l_margin--unset">Все треки</h5>
     <span class="d_l_margin-left--auto">{tracks.length} тр.</span>
@@ -15,7 +15,7 @@
   {#if tracks.length === 0}
     <p>Ничего не найдено.</p>
   {:else}
-    <div class="track-list">
+    <div class="track-list d_l_display--grid d_l_gap--s2">
       {#each tracks as track}
         <TrackRow
           track={track}
@@ -26,15 +26,3 @@
     </div>
   {/if}
 </section>
-
-<style>
-  .screen {
-    display: grid;
-    gap: 0.75em;
-  }
-
-  .track-list {
-    display: grid;
-    gap: 0.5em;
-  }
-</style>
