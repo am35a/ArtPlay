@@ -1,43 +1,110 @@
-# Svelte + Vite
+# ArtPlay
 
-This template should help get you started developing with Svelte in Vite.
+Офлайн аудиоплеер для прослушивания локальной библиотеки MP3-файлов.
+Собран на Svelte 5, Vite и S4 Design System.
 
-## Recommended IDE Setup
+## Цель проекта
 
-[VS Code](https://code.visualstudio.com/) + [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode).
+Апробация S4 Design System — проверка архитектурных решений фреймворка и
+компонентов дизайн-системы на реальном приложении. В ходе разработки
+подтверждена успешность подхода, выявлены и исправлены ошибки,
+отработаны паттерны рефакторинга стилей с кастомного CSS на S4-классы.
 
-## Need an official Svelte framework?
+## Исходный код и контент
 
-Check out [SvelteKit](https://github.com/sveltejs/kit#readme), which is also powered by Vite. Deploy anywhere with its serverless-first approach and adapt to various platforms, with out of the box support for TypeScript, SCSS, and Less, and easily-added support for mdsvex, GraphQL, PostCSS, Tailwind CSS, and more.
+Весь код приложения и все аудиокомпозиции в библиотеке созданы с помощью
+генеративных моделей. Проект — демонстрация возможностей современного ИИ
+как в разработке ПО, так и в создании контента.
 
-## Technical considerations
+**Модели, использованные в разработке:**
 
-**Why use this over SvelteKit?**
+- **Suno AI (dthcbb 4.5)** — генерация всех аудиотреков
+- **Codex 5.3** — задал базовую структуру, но не был пригоден для продакшен-работы
+- **Minimax 2.5** — позволил настраивать внешний вид в соответствии с S4, но слабо пригоден для продакшен-работы
+- **DeepSeek 4 Flash** — показал уверенные результаты, выполнил основной объём
+  рефакторинга и довёл проект до рабочего состояния
 
-- It brings its own routing solution which might not be preferable for some users.
-- It is first and foremost a framework that just happens to use Vite under the hood, not a Vite app.
+## Возможности
 
-This template contains as little as possible to get started with Vite + Svelte, while taking into account the developer experience with regards to HMR and intellisense. It demonstrates capabilities on par with the other `create-vite` templates and is a good starting point for beginners dipping their toes into a Vite + Svelte project.
+- Воспроизведение MP3 с управлением (play/pause, prev/next, перемотка ±10с, скролл прогресса)
+- Режимы повтора (off / one / all) и перемешивание очереди
+- Поиск по названиям треков, альбомов и авторов
+- 5 экранов: Главная, Авторы, Автор, Альбом, Сейчас играет
+- Визуализатор аудио (спектр/осциллограф) через Web Audio API
+- Сохранение состояния в localStorage (очередь, прогресс, настройки)
+- Адаптивный MiniPlayer со sticky-панелью
 
-Should you later need the extended capabilities and extensibility provided by SvelteKit, the template has been structured similarly to SvelteKit so that it is easy to migrate.
+## Технологии
 
-**Why include `.vscode/extensions.json`?**
+- **Svelte 5** — реактивность через runes (`$state`, `$derived`, `$effect`)
+- **Vite 8** — сборка и dev-сервер
+- **S4 Design System** — CSS-утилиты и кастомные элементы (`e-icon`, `e-group`)
+- **Web Audio API** — `AudioContext` + `AnalyserNode`
+- **music-metadata** — чтение длительности MP3 при генерации манифеста
+- **localStorage** — персистентность
 
-Other templates indirectly recommend extensions via the README, but this file allows VS Code to prompt the user to install the recommended extension upon opening the project.
+## Быстрый старт
 
-**Why enable `checkJs` in the JS template?**
-
-It is likely that most cases of changing variable types in runtime are likely to be accidental, rather than deliberate. This provides advanced typechecking out of the box. Should you like to take advantage of the dynamically-typed nature of JavaScript, it is trivial to change the configuration.
-
-**Why is HMR not preserving my local component state?**
-
-HMR state preservation comes with a number of gotchas! It has been disabled by default in both `svelte-hmr` and `@sveltejs/vite-plugin-svelte` due to its often surprising behavior. You can read the details [here](https://github.com/sveltejs/svelte-hmr/tree/master/packages/svelte-hmr#preservation-of-local-state).
-
-If you have state that's important to retain within a component, consider creating an external store which would not be replaced by HMR.
-
-```js
-// store.js
-// An extremely simple external store
-import { writable } from 'svelte/store'
-export default writable(0)
+```bash
+pnpm install
+pnpm run manifest    # просканировать public/library, собрать index.json
+pnpm run dev         # запустить dev-сервер
 ```
+
+Сборка:
+
+```bash
+pnpm run build       # статика в dist/
+pnpm run preview     # предпросмотр сборки
+```
+
+## Структура
+
+```
+src/
+├── App.svelte           # корневой компонент, роутинг экранов
+├── main.js              # точка входа
+├── lib/
+│   ├── player-store.js  # глобальное состояние, аудио, Web Audio API
+│   ├── library.js       # загрузка и поиск по библиотеке
+│   └── time.js          # форматирование времени
+├── components/
+│   ├── AppHeader.svelte
+│   ├── MiniPlayer.svelte
+│   ├── BottomToolbar.svelte
+│   ├── TrackRow.svelte
+│   ├── Visualizer.svelte
+│   └── screens/
+│       ├── HomeScreen.svelte
+│       ├── AuthorsScreen.svelte
+│       ├── AuthorScreen.svelte
+│       ├── AlbumScreen.svelte
+│       └── NowPlayingScreen.svelte
+scripts/
+├── generate-library-manifest.mjs  # генератор манифеста
+public/
+├── library/    # директория с MP3 (автор/альбом/треки)
+├── s4/         # S4 Design System
+└── icons/      # SVG-иконки
+```
+
+## Генерация библиотеки
+
+Скрипт `scripts/generate-library-manifest.mjs` сканирует `public/library/`, читает метаданные MP3 и создаёт `index.json`.
+Структура директорий:
+
+```
+public/library/
+├── author-name/
+│   ├── author.jpg          # фото автора
+│   ├── album-title/
+│   │   ├── cover.jpg       # обложка альбома
+│   │   ├── 01 - Title.mp3
+│   │   └── 02 - Title.mp3
+│   └── ...
+└── ...
+```
+
+## Лицензия
+
+MIT
