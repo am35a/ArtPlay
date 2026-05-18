@@ -91,12 +91,15 @@ S4 сочетает два подхода:
 
 ## Базовые классы и inline CSS-переменные
 
-Важно: классы вида `bottom`, `z-index`, `width`, `grid-template-columns` - без префикса устройства и без значения. Они активируют CSS-переменную, значение задаётся через inline style.
+Важно: классы вида `bottom`, `z-index`, `width`, `background-color`, `color`, `padding`, `margin`, `grid-template-columns` — без префикса устройства и без значения. Они активируют CSS-переменную, значение задаётся через inline style.
+
+Механизм: если есть базовый класс `.background-color`, то в CSS определён `background-color: var(--d_l_background-color, var(--background-color))`. Значение можно задать через inline `--background-color: <любое значение>` — не нужно подбирать готовую тему-переменную.
 
 Примеры:
 - `class=" grid-template-columns"` + `style="--grid-template-columns: 1fr 2fr"`
 - `class=" width"` + `style="--width: 2.5em"`
 - `class=" line-height"` + `style="--line-height: 1.5"`
+- `style="--background-color: color-mix(in srgb, var(--positive) 70%, transparent)"`
 - `<div class="bottom z-index" style="--bottom: .25em; --z-index: 20;">`
 
 Для device/orientation можно задавать и префиксные переменные:
@@ -228,3 +231,10 @@ S4 сочетает два подхода:
 - `public/s4/css/tablet/landscape.css`
 - `public/s4/css/tablet/portrait.css`
 - `public/s4/css/tablet/themes.css`
+
+## Рефакторинг на S4: правила для AI-агента
+
+- Не мапь CSS-свойства один-к-одному на utility-классы. Сначала ищи готовые компоненты S4 (`element--truncate`, `e-group`, `e-icon` и т.д.).
+- Перед изменениями смотри, как похожий паттерн уже реализован в компонентах проекта.
+- Не добавляй классов сверх того, что было в исходном CSS — заменяй существующие свойства, не улучшай.
+- Для кастомных значений, которых нет в utility-классах и темах, не пытайся подобрать ближайшую тему-переменную. Используй inline `--<свойство>: <значение>` — S4 прочитает её через fallchain цепочку базового класса. Например: `style="--background-color: color-mix(...)"`, `style="--color: #123"`, `style="--padding: 0.35em"`.
