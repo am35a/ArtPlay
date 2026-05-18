@@ -1,3 +1,8 @@
+<div align="center">
+  <img width="320" alt="Screen Shot 2026-05-19 at 01 03 10" src="https://github.com/user-attachments/assets/9308b7bc-e0ba-483d-8b82-a1d2be519d2f" />
+  <img width="320" alt="Screen Shot 2026-05-19 at 01 05 27" src="https://github.com/user-attachments/assets/4d0f1af1-ccf8-4b6a-b84b-2c964fc3b33f" />
+</div>
+
 # ArtPlay
 
 Офлайн аудиоплеер для прослушивания локальной библиотеки MP3-файлов.
