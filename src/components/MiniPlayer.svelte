@@ -45,14 +45,14 @@
 >
     <div class="mini-controls d_l_font-size--l3 d_l_align-items--center">
       <div class="d_l_display--inline-flex d_l_gap--s2 d_l_flex-wrap--wrap d_l_justify-content--start d_l_font-size--s2">
-        <button class="d_l_padding-inline--s3 d_l_border-radius--l2 d_l_background-color--transparent" type="button" onclick={(event) => { event.stopPropagation(); onShuffle?.() }}>
+        <button class="d_l_padding-inline--s3 d_l_border-radius--oval d_l_background-color--transparent" type="button" aria-label="Перемешивание" onclick={(event) => { event.stopPropagation(); onShuffle?.() }}>
           {#if state.shuffle}
             <e-icon aria-hidden="true" style="--image: url(/icons/shuffle.svg)"></e-icon>
           {:else}
             <e-icon aria-hidden="true" style="--image: url(/icons/shuffle-off.svg)"></e-icon>
           {/if}
         </button>
-        <button class="d_l_padding-inline--s3 d_l_border-radius--l2 d_l_background-color--transparent" type="button" onclick={(event) => { event.stopPropagation(); onRepeat?.() }}>
+        <button class="d_l_padding-inline--s3 d_l_border-radius--oval d_l_background-color--transparent" type="button" aria-label="Повтор" onclick={(event) => { event.stopPropagation(); onRepeat?.() }}>
           {#if state.repeatMode === 'off'}
             <e-icon aria-hidden="true" style="--image: url(/icons/repeat-off.svg)"></e-icon>
           {:else if state.repeatMode === 'all'}
@@ -60,26 +60,26 @@
           {:else}
             <e-icon aria-hidden="true" style="--image: url(/icons/repeat-once.svg)"></e-icon>
           {/if}
-        </button>        
+        </button>
       </div>
-      <button class="d_l_padding-inline--s3 d_l_border-radius--l2 d_l_background-color--transparent" type="button" onclick={(event) => { event.stopPropagation(); onPrev?.() }}>
+      <button class="d_l_padding-inline--s3 d_l_border-radius--oval d_l_background-color--transparent" type="button" aria-label="Предыдущий трек" onclick={(event) => { event.stopPropagation(); onPrev?.() }}>
         <e-icon aria-hidden="true" style="--image: url(/icons/prev.svg)"></e-icon>
       </button>
-      <button type="button" class="d_l_padding-inline--s3 d_l_border-radius--l2 d_l_font-size--l2 prime" onclick={(event) => { event.stopPropagation(); onToggle?.() }}>
+      <button type="button" class="d_l_padding-inline--s3 d_l_border-radius--oval d_l_font-size--l2 prime" aria-label={state.isPlaying ? 'Пауза' : 'Воспроизвести'} onclick={(event) => { event.stopPropagation(); onToggle?.() }}>
         {#if state.isPlaying}
           <e-icon aria-hidden="true" style="--image: url(/icons/pause.svg)"></e-icon>
         {:else}
           <e-icon aria-hidden="true" style="--image: url(/icons/play.svg)"></e-icon>
         {/if}
       </button>
-      <button class="d_l_padding-inline--s3 d_l_border-radius--l2 d_l_background-color--transparent" type="button" onclick={(event) => { event.stopPropagation(); onNext?.() }}>
+      <button class="d_l_padding-inline--s3 d_l_border-radius--oval d_l_background-color--transparent" type="button" aria-label="Следующий трек" onclick={(event) => { event.stopPropagation(); onNext?.() }}>
         <e-icon aria-hidden="true" style="--image: url(/icons/next.svg)"></e-icon>
       </button>
       <div class="d_l_display--inline-flex d_l_gap--s2 d_l_flex-wrap--wrap d_l_justify-content--end d_l_font-size--s2">
-        <button class="d_l_padding-inline--s3 d_l_border-radius--l2 d_l_background-color--transparent" type="button" onclick={(event) => { event.stopPropagation(); onAuthor?.() }} disabled={!track}>
+        <button class="d_l_padding-inline--s3 d_l_border-radius--oval d_l_background-color--transparent" type="button" aria-label="Открыть автора" onclick={(event) => { event.stopPropagation(); onAuthor?.() }} disabled={!track}>
           <e-icon aria-hidden="true" style="--image: url(/icons/author.svg)"></e-icon>
         </button>
-        <button class="d_l_padding-inline--s3 d_l_border-radius--l2 d_l_background-color--transparent" type="button" onclick={(event) => { event.stopPropagation(); onAlbum?.() }} disabled={!track}>
+        <button class="d_l_padding-inline--s3 d_l_border-radius--oval d_l_background-color--transparent" type="button" aria-label="Открыть альбом" onclick={(event) => { event.stopPropagation(); onAlbum?.() }} disabled={!track}>
           <e-icon aria-hidden="true" style="--image: url(/icons/album.svg)"></e-icon>
         </button>
       </div>

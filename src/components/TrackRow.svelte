@@ -12,54 +12,19 @@
   const durationLabel = $derived(track.durationLabel ?? formatSeconds(track.durationSec))
 </script>
 
-<button class:success={active} class="track-row" type="button" onclick={handlePlay}>
-  <img class="track-cover" src={track.cover ?? ''} alt={track.albumTitle} />
-  <span class="track-main d_l_line-height--1 d_l_font-size--s1">
-    <strong class="track-title">{track.title}</strong>
-    <small class="track-artist">{track.artistName}</small>
+<button
+  class="d_l_display--grid grid-template-columns d_l_align-items--center d_l_text-align--start d_l_width--100 d_l_gap--s1 d_l_padding--s2 d_l_border-radius--s1"
+  style="--grid-template-columns: 2.5em 1fr auto"
+  class:success={active} type="button" onclick={handlePlay}
+>
+  <img
+    class="track-cover object-fit--cover width height d_l_border-radius--s3"
+    style="--background-color: color-mix(in srgb, var(--positive) 70%, transparent); --width: 2.5em; --height: 2.5em"
+    src={track.cover ?? ''} alt={track.albumTitle}
+  />
+  <span class="element--truncate d_l_display--grid d_l_gap--s2 d_l_line-height--1 d_l_font-size--s1">
+    <strong class="d_l_display--block element--truncate">{track.title}</strong>
+    <small class="d_l_display--block element--truncate d_l_color--negative--dark">{track.artistName}</small>
   </span>
-  <span class="track-duration">{durationLabel}</span>
+  <span class="track-duration d_l_color--negative--dark" style="font-variant-numeric: tabular-nums">{durationLabel}</span>
 </button>
-
-<style>
-  .track-row {
-    width: 100%;
-    display: grid;
-    grid-template-columns: 2.5em 1fr auto;
-    gap: 0.75em;
-    align-items: center;
-    text-align: left;
-    padding: 0.5em;
-    border-radius: 0.75em;
-  }
-
-  .track-cover {
-    width: 2.5em;
-    height: 2.5em;
-    border-radius: 0.25em;
-    object-fit: cover;
-    background: color-mix(in srgb, var(--positive, #ddd) 70%, transparent);
-  }
-
-  .track-main {
-    min-width: 0;
-    display: grid;
-    gap: 0.5em;
-  }
-
-  .track-title,
-  .track-artist {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  .track-artist {
-    opacity: 0.75;
-  }
-
-  .track-duration {
-    font-variant-numeric: tabular-nums;
-    opacity: 0.85;
-  }
-</style>
