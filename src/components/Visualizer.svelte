@@ -110,18 +110,7 @@
   })
 </script>
 
-<canvas bind:this={canvas} class="visualizer"></canvas>
-
-<style>
-  .visualizer {
-    position: absolute;
-    width: min(100%, 80em);
-    max-width: 80em;
-    height: 2em;
-    max-height: 2em;
-    border-radius: 0.5em;
-    background: var(--positive);
-    left: 50%;
-    transform: translateX(-50%);
-  }
-</style>
+<canvas bind:this={canvas}
+  class="d_l_position--absolute width height max-height d_l_background-color--positive d_l_border-radius--s2 d_l_left--50 transform"
+  style="--width: min(100%, 80em); --height: 2em; --max-height: 2em; --transform: translateX(-50%)"
+></canvas>

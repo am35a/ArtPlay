@@ -9,7 +9,7 @@
   }
 </script>
 
-<section class="screen">
+<section class="d_l_display--grid d_l_gap--s1">
   <header class="d_l_display--flex d_l_align-items--baseline">
     <h5 class="d_l_margin--unset">Авторы</h5>
     <span class="d_l_margin-left--auto">{artists.length}</span>
@@ -18,64 +18,26 @@
   {#if artists.length === 0}
     <p>Ничего не найдено.</p>
   {:else}
-    <div class="author-grid">
+    <div class="d_l_display--grid d_l_gap--s2">
       {#each artists as artist}
-        <button class="author-card" type="button" onclick={() => onOpen?.(artist.id)}>
-          <img class="author-cover" src={artist.photo ?? EMPTY_PIXEL} alt={artist.name} />
-          <span class="author-main d_l_line-height--1 d_l_font-size--s1">
-            <strong class="author-title">{artist.name}</strong>
-            <small class="author-meta">{artist.albums.length} альбомов • {getTracksTotal(artist)} треков</small>
+        <button
+          class="d_l_display--grid grid-template-columns d_l_align-items--center d_l_text-align--start d_l_width--100 d_l_gap--s1 d_l_padding--s2 d_l_border-radius--s1"
+          type="button"
+          onclick={() => onOpen?.(artist.id)}
+          style="--grid-template-columns: 2.5em 1fr"
+        >
+          <img
+            class="object-fit--cover width height d_l_border-radius--s3"
+            src={artist.photo ?? EMPTY_PIXEL}
+            alt={artist.name}
+            style="--background-color: color-mix(in srgb, var(--positive) 70%, transparent); --width: 2.5em; --height: 2.5em"
+          />
+          <span class="element--truncate d_l_display--grid d_l_gap--s2 d_l_line-height--1 d_l_font-size--s1">
+            <strong class="d_l_display--block element--truncate">{artist.name}</strong>
+            <small class="d_l_display--block element--truncate d_l_color--negative--dark">{artist.albums.length} альбомов • {getTracksTotal(artist)} треков</small>
           </span>
         </button>
       {/each}
     </div>
   {/if}
 </section>
-
-<style>
-  .screen {
-    display: grid;
-    gap: 0.75em;
-  }
-
-  .author-grid {
-    display: grid;
-    gap: 0.35em;
-  }
-
-  .author-card {
-    width: 100%;
-    display: grid;
-    grid-template-columns: 2.5em 1fr;
-    gap: 0.75em;
-    align-items: center;
-    text-align: left;
-    padding: 0.5em;
-    border-radius: 0.75em;
-  }
-
-  .author-cover {
-    width: 2.5em;
-    height: 2.5em;
-    object-fit: cover;
-    border-radius: 0.25em;
-    background: color-mix(in srgb, var(--positive) 70%, transparent);
-  }
-
-  .author-main {
-    min-width: 0;
-    display: grid;
-    gap: 0.5em;
-  }
-
-  .author-title,
-  .author-meta {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  .author-meta {
-    opacity: 0.75;
-  }
-</style>

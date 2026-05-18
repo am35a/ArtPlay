@@ -159,12 +159,12 @@
 </script>
 
 {#if loading}
-  <main class="state-view"><p>Загрузка библиотеки...</p></main>
+  <main class="d_l_display--grid d_l_align-items--center d_l_justify-items--center d_l_padding--l2 min-height" style="--min-height: 100dvh"><p>Загрузка библиотеки...</p></main>
 {:else if loadError}
-  <main class="state-view"><p>Ошибка: {loadError}</p></main>
+  <main class="d_l_display--grid d_l_align-items--center d_l_justify-items--center d_l_padding--l2 min-height" style="--min-height: 100dvh"><p>Ошибка: {loadError}</p></main>
 {:else}
   {#if hideGlobal}
-    <main class="nowplaying-shell">
+    <main class="d_l_display--grid d_l_margin--auto min-height max-width grid-template-rows" style="--min-height: 100dvh; --max-width: 40em; --grid-template-rows: 1fr auto">
       <NowPlayingScreen
         {state}
         track={currentTrack}
@@ -185,10 +185,10 @@
       />
     </main>
   {:else}
-    <main class="app-shell">
+    <main class="d_l_display--grid d_l_margin--auto min-height max-width grid-template-rows" style="--min-height: 100dvh; --max-width: 40em; --grid-template-rows: auto 1fr auto">
       <AppHeader value={query} onSearch={(value) => playerStore.setSearchQuery(value)} />
 
-      <section class="screen-wrap">
+      <section class="d_l_padding--s1 d_l_overflow--auto">
         {#if state.activeScreen === 'home'}
           <HomeScreen tracks={homeTracks} currentTrackId={state.currentTrackId} onPlay={playFromHome} />
         {:else if state.activeScreen === 'authors'}
@@ -209,66 +209,39 @@
         {/if}
       </section>
 
-      <MiniPlayer
-        {state}
-        track={currentTrack}
-        {currentTimeLabel}
-        {durationLabel}
-        onOpen={() => playerStore.openNowPlaying()}
-        onToggle={() => playerStore.togglePlayPause()}
-        onPrev={() => playerStore.playPrev()}
-        onNext={() => playerStore.playNext()}
-        onShuffle={() => playerStore.toggleShuffle()}
-        onRepeat={() => playerStore.cycleRepeat()}
-        onAuthor={() => playerStore.openCurrentTrackAuthor()}
-        onAlbum={() => playerStore.openCurrentTrackAlbum()}
-        onSeek={(value) => playerStore.seekTo(value)}
-      />
+      <section
+        class="d_l_position--sticky d_l_display--grid d_l_gap--s1 d_l_bottom--0 z-index"
+        style="--z-index: 20"
+      >
+        <MiniPlayer
+          {state}
+          track={currentTrack}
+          {currentTimeLabel}
+          {durationLabel}
+          onOpen={() => playerStore.openNowPlaying()}
+          onToggle={() => playerStore.togglePlayPause()}
+          onPrev={() => playerStore.playPrev()}
+          onNext={() => playerStore.playNext()}
+          onShuffle={() => playerStore.toggleShuffle()}
+          onRepeat={() => playerStore.cycleRepeat()}
+          onAuthor={() => playerStore.openCurrentTrackAuthor()}
+          onAlbum={() => playerStore.openCurrentTrackAlbum()}
+          onSeek={(value) => playerStore.seekTo(value)}
+        />
 
-      <BottomToolbar
-        activeScreen={state.activeScreen}
-        onGo={onToolbarGo}
-      />
+        <BottomToolbar
+          activeScreen={state.activeScreen}
+          onGo={onToolbarGo}
+        />
+      </section>
     </main>
   {/if}
 {/if}
 
 <style>
-  :global(*) {
-    box-sizing: border-box;
-  }
-
   :global(body) {
-    min-height: 100vh;
-    background: linear-gradient(-35deg, color-mix(in srgb, var(--positive) 97%, transparent), color-mix(in srgb, var(--prime) 8%, transparent));
+    min-height: 100dvh;
+    background: linear-gradient(-35deg, color-mix(in srgb, var(--positive) 90%, transparent), color-mix(in srgb, var(--prime) 10%, transparent));
     background-attachment: fixed;
-  }
-
-  .app-shell {
-    min-height: 100dvh;
-    display: grid;
-    grid-template-rows: auto 1fr auto auto;
-    margin: auto;
-    max-width: 40em;
-  }
-
-  .nowplaying-shell {
-    min-height: 100dvh;
-    display: grid;
-    grid-template-rows: 1fr auto;
-    margin: auto;
-    max-width: 40em;
-  }
-
-  .screen-wrap {
-    padding: 0.75em;
-    overflow: auto;
-  }
-
-  .state-view {
-    min-height: 100vh;
-    display: grid;
-    place-items: center;
-    padding: 2em;
   }
 </style>

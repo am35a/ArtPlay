@@ -71,7 +71,7 @@
       <button class="d_l_padding-inline--s3 d_l_border-radius--oval d_l_background-color--transparent" type="button" aria-label="Перемотка назад" onclick={() => onRewind?.()}>
         <e-icon aria-hidden="true" style="--image: url(/icons/rewind.svg)"></e-icon>
       </button>
-      <button type="button" class="d_l_padding-inline--s3 d_l_border-radius--oval d_l_font-size--l2" aria-label={state.isPlaying ? 'Пауза' : 'Воспроизвести'} onclick={() => onToggle?.()}>
+      <button type="button" class="prime d_l_padding-inline--s3 d_l_border-radius--oval d_l_font-size--l2" aria-label={state.isPlaying ? 'Пауза' : 'Воспроизвести'} onclick={() => onToggle?.()}>
         {#if state.isPlaying}
           <e-icon aria-hidden="true" style="--image: url(/icons/pause.svg)"></e-icon>
         {:else}
