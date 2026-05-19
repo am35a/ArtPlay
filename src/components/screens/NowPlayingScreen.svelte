@@ -17,6 +17,7 @@
     onShuffle = null,
     onRepeat = null,
     onMode = null,
+    onAlbum = null,
   } = $props()
 
   const duration = $derived(Number.isFinite(state.duration) ? state.duration : 0)
@@ -26,12 +27,14 @@
 <section class="d_l_padding--s1 d_l_display--grid d_l_gap--s1 d_l_align-content--center">
   <section class="d_l_display--grid d_l_justify-items--center d_l_text-align--center d_l_gap--s2">
     <h3 class="d_l_flex-grow--1 d_l_margin--unset">{track?.albumTitle}</h3>
-    <img
-      class="d_l_box-shadow--md d_l_aspect-ratio--1 d_l_border-radius--s3 d_l_object-fit--cover background-color width"
-      style="--width: min(64vw, 16em); --background-color: color-mix(in srgb, var(--positive) 70%, transparent)"
-      src={track?.cover ?? ''}
-      alt={track?.albumTitle ?? 'cover'}
-    />
+    <button type="button" class="d_l_background-color--transparent d_l_padding--unset d_l_border-style--none d_l_line-height--0" onclick={() => onAlbum?.()}>
+      <img
+        class="d_l_box-shadow--md d_l_aspect-ratio--1 d_l_border-radius--s3 d_l_object-fit--cover background-color width"
+        style="--width: min(64vw, 16em); --background-color: color-mix(in srgb, var(--positive) 70%, transparent)"
+        src={track?.cover ?? ''}
+        alt={track?.albumTitle ?? 'cover'}
+      />
+    </button>
     <h4 class="d_l_margin-block--unset">{track?.title ?? 'Ничего не играет'}</h4>
     <span>{track?.artistName ?? ''}</span>
     <span>{formatSeconds(current)} / {formatSeconds(duration)}</span>

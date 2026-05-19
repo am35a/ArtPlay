@@ -29,6 +29,8 @@
     onSeek?.(value)
   }
 
+  const FALLBACK_IMG = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiNjY2MiIHN0cm9rZS13aWR0aD0iMS41IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Ik05IDE4VjVsMTItMnYxMyIvPjxjaXJjbGUgY3g9IjYiIGN5PSIxOCIgcj0iMyIvPjxjaXJjbGUgY3g9IjE4IiBjeT0iMTYiIHI9IjMiLz48L3N2Zz4='
+
   const progressMax = $derived(Number.isFinite(state.duration) && state.duration > 0 ? state.duration : 0)
   const progressValue = $derived(Number.isFinite(state.currentTime) ? state.currentTime : 0)
   const title = $derived(track ? `${track.title} — ${track.artistName}` : 'Ничего не играет')
@@ -76,10 +78,10 @@
       <e-icon aria-hidden="true" style="--image: url(/icons/next.svg)"></e-icon>
     </button>
     <div class="d_l_display--inline-flex d_l_gap--s2 d_l_flex-wrap--wrap d_l_justify-content--end d_l_font-size--s2">
-      <button class="d_l_padding-inline--s3 d_l_border-radius--oval d_l_background-color--transparent" type="button" aria-label="Открыть автора" onclick={(event) => { event.stopPropagation(); onAuthor?.() }} disabled={!track}>
+      <button class="d_l_padding-inline--s3 d_l_border-radius--oval d_l_background-color--transparent" type="button" aria-label="Открыть автора" onclick={(event) => { event.stopPropagation(); onAuthor?.() }} disabled={!track || state.activeScreen === 'author'}>
         <e-icon aria-hidden="true" style="--image: url(/icons/author.svg)"></e-icon>
       </button>
-      <button class="d_l_padding-inline--s3 d_l_border-radius--oval d_l_background-color--transparent" type="button" aria-label="Открыть альбом" onclick={(event) => { event.stopPropagation(); onAlbum?.() }} disabled={!track}>
+      <button class="d_l_padding-inline--s3 d_l_border-radius--oval d_l_background-color--transparent" type="button" aria-label="Открыть альбом" onclick={(event) => { event.stopPropagation(); onAlbum?.() }} disabled={!track || state.activeScreen === 'album'}>
         <e-icon aria-hidden="true" style="--image: url(/icons/album.svg)"></e-icon>
       </button>
     </div>
@@ -91,6 +93,8 @@
         src={track?.cover ?? ''}
         alt={track?.albumTitle ?? 'cover'}
         style="--width: 2em; --height: 2em; --background-color: color-mix(in srgb, var(--positive) 70%, transparent)"
+        loading="lazy"
+        onerror={(e) => { if (e.currentTarget.src !== FALLBACK_IMG) e.currentTarget.src = FALLBACK_IMG }}
       />
       <div class="d_l_flex-grow--1 d_l_display--grid">
         <div class="d_l_overflow--hidden d_l_white-space--nowrap">

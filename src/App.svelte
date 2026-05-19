@@ -2,6 +2,7 @@
   // @ts-nocheck
   
   import { onMount } from 'svelte'
+  import { fade } from 'svelte/transition'
   import { formatSeconds } from './lib/time.js'
   import { loadLibraryManifest, searchInLibrary } from './lib/library.js'
   import { playerStore } from './lib/player-store.js'
@@ -178,6 +179,7 @@
         onShuffle={() => playerStore.toggleShuffle()}
         onRepeat={() => playerStore.cycleRepeat()}
         onMode={(mode) => playerStore.setVisualizerMode(mode)}
+        onAlbum={() => playerStore.openCurrentTrackAlbum()}
       />
       <BottomToolbar
         activeScreen={state.activeScreen}
@@ -188,26 +190,28 @@
     <main class="d_l_display--grid d_l_margin--auto min-height max-width grid-template-rows" style="--min-height: 100dvh; --max-width: 40em; --grid-template-rows: auto 1fr auto">
       <AppHeader value={query} onSearch={(value) => playerStore.setSearchQuery(value)} />
 
-      <section class="d_l_padding--s1 d_l_overflow--auto">
-        {#if state.activeScreen === 'home'}
-          <HomeScreen tracks={homeTracks} currentTrackId={state.currentTrackId} onPlay={playFromHome} />
-        {:else if state.activeScreen === 'authors'}
-          <AuthorsScreen artists={authorCards} onOpen={(artistId) => playerStore.openAuthor(artistId)} />
-        {:else if state.activeScreen === 'author'}
-          <AuthorScreen
-            artist={selectedAuthor}
-            currentTrackId={state.currentTrackId}
-            onPlay={playFromAuthor}
-            onOpenAlbum={(albumId) => playerStore.openAlbum(albumId)}
-          />
-        {:else if state.activeScreen === 'album'}
-          <AlbumScreen
-            album={selectedAlbum}
-            currentTrackId={state.currentTrackId}
-            onPlay={playFromAlbum}
-          />
-        {/if}
-      </section>
+      {#key state.activeScreen}
+        <section class="d_l_padding--s1 d_l_overflow--auto" out:fade={{ duration: 100 }} in:fade={{ duration: 100, delay: 100 }}>
+          {#if state.activeScreen === 'home'}
+            <HomeScreen tracks={homeTracks} currentTrackId={state.currentTrackId} onPlay={playFromHome} />
+          {:else if state.activeScreen === 'authors'}
+            <AuthorsScreen artists={authorCards} onOpen={(artistId) => playerStore.openAuthor(artistId)} />
+          {:else if state.activeScreen === 'author'}
+            <AuthorScreen
+              artist={selectedAuthor}
+              currentTrackId={state.currentTrackId}
+              onPlay={playFromAuthor}
+              onOpenAlbum={(albumId) => playerStore.openAlbum(albumId)}
+            />
+          {:else if state.activeScreen === 'album'}
+            <AlbumScreen
+              album={selectedAlbum}
+              currentTrackId={state.currentTrackId}
+              onPlay={playFromAlbum}
+            />
+          {/if}
+        </section>
+      {/key}
 
       <section
         class="d_l_position--sticky d_l_display--grid d_l_gap--s1 d_l_bottom--0 z-index"

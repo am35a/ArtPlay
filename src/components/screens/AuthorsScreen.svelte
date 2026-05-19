@@ -31,6 +31,8 @@
             src={artist.photo ?? EMPTY_PIXEL}
             alt={artist.name}
             style="--background-color: color-mix(in srgb, var(--positive) 70%, transparent); --width: 2.5em; --height: 2.5em"
+            loading="lazy"
+            onerror={(e) => { if (!e.currentTarget.src.startsWith('data')) e.currentTarget.src = EMPTY_PIXEL }}
           />
           <span class="element--truncate d_l_display--grid d_l_gap--s2 d_l_line-height--1 d_l_font-size--s1">
             <strong class="d_l_display--block element--truncate">{artist.name}</strong>
