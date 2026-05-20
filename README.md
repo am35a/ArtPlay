@@ -1,6 +1,6 @@
 <div align="center">
-  <img width="320" alt="Screen Shot 2026-05-19 at 01 03 10" src="https://github.com/user-attachments/assets/9308b7bc-e0ba-483d-8b82-a1d2be519d2f" />
   <img width="320" alt="Screen Shot 2026-05-19 at 01 05 27" src="https://github.com/user-attachments/assets/4d0f1af1-ccf8-4b6a-b84b-2c964fc3b33f" />
+  <img width="320" alt="Screen Shot 2026-05-19 at 01 03 10" src="https://github.com/user-attachments/assets/9308b7bc-e0ba-483d-8b82-a1d2be519d2f" />
 </div>
 
 # ArtPlay
@@ -109,6 +109,21 @@ public/library/
 │   └── ...
 └── ...
 ```
+
+## Навигация
+ 
+| Откуда | Куда | Триггер |
+|--------|------|---------|
+| Главная | Фильтрация | Поиск |
+| Главная / Автор / Альбом | Воспроизведение | Клик по треку |
+| BottomToolbar | Авторы | Кнопка «Авторы» |
+| Авторы | Автор | Клик по автору |
+| Автор | Альбом | Клик по альбому |
+| Воспроизведение | MiniPlayer | Автоматически |
+| MiniPlayer | Автор / Альбом | Кнопки в плеере |
+| MiniPlayer | Now Playing | Клик «Трек» в Toolbar |
+| Now Playing | Альбом | Клик по обложке |
+| Now Playing | Главная / Авторы | BottomToolbar |
 
 ## Лицензия
 
