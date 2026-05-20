@@ -7,7 +7,6 @@ const REPEAT_STEPS = ['off', 'one', 'all']
 
 const initialState = {
   activeScreen: 'home',
-  previousScreenStack: [],
   searchQuery: '',
   selectedArtistId: null,
   selectedAlbumId: null,
@@ -70,7 +69,6 @@ function createPlayerStore() {
     volume: Number.isFinite(persisted?.volume) ? clamp(persisted.volume, 0, 1) : 1,
     currentTime: Number.isFinite(persisted?.currentTime) ? Math.max(0, persisted.currentTime) : 0,
     duration: Number.isFinite(persisted?.duration) ? Math.max(0, persisted.duration) : 0,
-    previousScreenStack: [],
     queueTrackIds: Array.isArray(persisted?.queueTrackIds) ? persisted.queueTrackIds : [],
   }
 
@@ -444,24 +442,7 @@ function createPlayerStore() {
     update((state) => {
       if (!state.currentTrackId) return state
       if (state.activeScreen === 'nowPlaying') return state
-      return {
-        ...state,
-        previousScreenStack: [...state.previousScreenStack, state.activeScreen],
-        activeScreen: 'nowPlaying',
-      }
-    })
-  }
-
-  function goBackFromNowPlaying() {
-    update((state) => {
-      if (state.activeScreen !== 'nowPlaying') return state
-      const stack = [...state.previousScreenStack]
-      const prev = stack.pop() ?? 'home'
-      return {
-        ...state,
-        previousScreenStack: stack,
-        activeScreen: prev,
-      }
+      return { ...state, activeScreen: 'nowPlaying' }
     })
   }
 
@@ -531,7 +512,6 @@ function createPlayerStore() {
     openCurrentTrackAlbum,
     ensureAnalyserReady,
     openNowPlaying,
-    goBackFromNowPlaying,
     setTrackQueue,
     playTrack,
     playNext,
