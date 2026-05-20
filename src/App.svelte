@@ -133,6 +133,11 @@
       loadError = error instanceof Error ? error.message : 'манифест не загрузился'
     } finally {
       loading = false
+      const splash = document.querySelector('.splash')
+      if (splash) {
+        splash.textContent = 'Загрузка завершена!'
+        setTimeout(() => splash.remove(), 500)
+      }
     }
   })
 
@@ -160,12 +165,12 @@
 </script>
 
 {#if loading}
-  <main class="d_l_display--grid d_l_align-items--center d_l_justify-items--center d_l_padding--l2 min-height" style="--min-height: 100dvh"><p>Загрузка библиотеки...</p></main>
+  <article class="d_l_display--grid d_l_align-items--center d_l_justify-items--center d_l_padding--l2 min-height" style="--min-height: 100dvh"><p>Загрузка библиотеки...</p></article>
 {:else if loadError}
-  <main class="d_l_display--grid d_l_align-items--center d_l_justify-items--center d_l_padding--l2 min-height" style="--min-height: 100dvh"><p>Ошибка: {loadError}</p></main>
+  <article class="d_l_display--grid d_l_align-items--center d_l_justify-items--center d_l_padding--l2 min-height" style="--min-height: 100dvh"><p>Ошибка: {loadError}</p></article>
 {:else}
   {#if hideGlobal}
-    <main class="d_l_display--grid d_l_margin--auto min-height max-width grid-template-rows" style="--min-height: 100dvh; --max-width: 40em; --grid-template-rows: 1fr auto">
+    <article class="d_l_display--grid d_l_margin--auto min-height max-width grid-template-rows" style="--min-height: 100dvh; --max-width: 40em; --grid-template-rows: 1fr auto">
       <NowPlayingScreen
         {state}
         track={currentTrack}
@@ -185,9 +190,9 @@
         activeScreen={state.activeScreen}
         onGo={onToolbarGo}
       />
-    </main>
+    </article>
   {:else}
-    <main class="d_l_display--grid d_l_margin--auto min-height max-width grid-template-rows" style="--min-height: 100dvh; --max-width: 40em; --grid-template-rows: auto 1fr auto">
+    <article class="d_l_display--grid d_l_margin--auto min-height max-width grid-template-rows" style="--min-height: 100dvh; --max-width: 40em; --grid-template-rows: auto 1fr auto">
       <AppHeader value={query} onSearch={(value) => playerStore.setSearchQuery(value)} />
 
       {#key state.activeScreen}
@@ -238,7 +243,7 @@
           onGo={onToolbarGo}
         />
       </section>
-    </main>
+    </article>
   {/if}
 {/if}
 

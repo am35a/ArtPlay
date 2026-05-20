@@ -27,8 +27,9 @@ S4 сочетает два подхода:
 ```html
 <head>
     <script src="/s4/js/s4.min.js"></script>
+    <script>S4()</script>
 </head>
-<body onload="S4()">
+<body>
     <!-- JS-фреймворк (svelte, vue и т.п.) в приложение подключается отдельно -->
 </body>
 ```
